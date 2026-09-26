@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Demand test dashboard · Wren</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%232a78d6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="config.js" defer></script>
+  <script src="js/brand.js" defer></script>
+  <script src="js/preview-backend.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div class="viz-root">
+    <header class="top">
+      <div class="top__title">
+        <h1>Demand test dashboard</h1>
+        <p class="top__sub"><span data-brand-name>Wren</span> fake-door test · <span id="mode-label">Loading…</span></p>
+      </div>
+      <div class="top__actions">
+        <button type="button" class="btn btn--quiet" id="forget-key" hidden>Forget key</button>
+        <button type="button" class="btn btn--quiet" id="clear-preview" hidden>Clear preview data</button>
+      </div>
+    </header>
+
+    <main>
+    <!-- Admin key form (live mode only) -->
+    <section class="card key-card" id="key-card" hidden aria-labelledby="key-title">
+      <h2 id="key-title">Enter your admin key</h2>
+      <p class="muted">This is the ADMIN_KEY you saved in the Apps Script project's Script Properties. It is kept only in this browser.</p>
+      <form id="key-form" class="key-form">
+        <label for="admin-key" class="sr-only">Admin key</label>
+        <input id="admin-key" type="password" autocomplete="current-password" required placeholder="Admin key">
+        <button type="submit" class="btn btn--primary">Open dashboard</button>
+      </form>
+      <p class="error" id="key-error" role="alert" hidden></p>
+    </section>
+
+    <div id="dashboard" hidden>
+      <!-- Filters: one row, scoping everything below -->
+      <div class="filters" role="group" aria-label="Date range and refresh">
+        <div class="seg" role="radiogroup" aria-label="Date range">
+          <button type="button" role="radio" data-range="today" aria-checked="false">Today</button>
+          <button type="button" role="radio" data-range="7" aria-checked="false">7 days</button>
+          <button type="button" role="radio" data-range="30" aria-checked="false">30 days</button>
+          <button type="button" role="radio" data-range="all" aria-checked="true">All</button>
+        </div>
+        <button type="button" class="btn btn--quiet" id="refresh">Refresh</button>
+        <span class="muted small" id="updated" aria-live="polite"></span>
+      </div>
+      <p class="error" id="load-error" role="alert" hidden></p>
+
+      <div id="content">
+        <!-- Headline -->
+        <section class="hero-figure card" aria-labelledby="rate-label">
+          <p id="rate-label" class="tile__label">Buy-click rate</p>
+          <p class="hero-figure__value" id="rate-value">–</p>
+          <p class="muted" id="rate-detail"></p>
+        </section>
+
+        <section class="tiles" aria-label="Key numbers">
+          <div class="card tile"><p class="tile__label">Unique visitors</p><p class="tile__value" id="t-visitors">–</p></div>
+          <div class="card tile"><p class="tile__label">Total buy clicks</p><p class="tile__value" id="t-clicks">–</p></div>
+          <div class="card tile"><p class="tile__label">Unique buyers</p><p class="tile__value" id="t-buyers">–</p></div>
+          <div class="card tile"><p class="tile__label">Buyers with email</p><p class="tile__value" id="t-emails">–</p></div>
+          <div class="card tile"><p class="tile__label">Clicked Buy but left no email</p><p class="tile__value" id="t-noemail">–</p></div>
+        </section>
+
+        <section class="card" aria-labelledby="c-days-title">
+          <div class="card__head">
+            <h2 id="c-days-title">Buy clicks per day</h2>
+            <button type="button" class="linkish" data-table-toggle="c-days">Show table</button>
+          </div>
+          <div class="chart" id="c-days"></div>
+        </section>
+
+        <div class="grid-2">
+          <section class="card" aria-labelledby="c-funnel-title">
+            <h2 id="c-funnel-title">Funnel</h2>
+            <p class="muted small">Unique visitors reaching each step.</p>
+            <div class="chart" id="c-funnel"></div>
+          </section>
+
+          <section class="card" aria-labelledby="c-price-title">
+            <h2 id="c-price-title">Buy-click rate by price</h2>
+            <p class="muted small">Dot is the rate. Line is the 95% Wilson range: the true rate is likely somewhere inside it. Overlapping ranges mean the difference may be chance.</p>
+            <div class="chart" id="c-price"></div>
+          </section>
+
+          <section class="card" aria-labelledby="c-plan-title">
+            <h2 id="c-plan-title">Buy clicks by plan</h2>
+            <div class="chart" id="c-plan"></div>
+          </section>
+
+          <section class="card" aria-labelledby="c-button-title">
+            <h2 id="c-button-title">Buy clicks by button</h2>
+            <div class="chart" id="c-button"></div>
+          </section>
+
+          <section class="card" aria-labelledby="c-source-title">
+            <h2 id="c-source-title">Buy clicks by traffic source</h2>
+            <p class="muted small">From utm_source. "(no UTM)" means no tag in the link.</p>
+            <div class="chart" id="c-source"></div>
+          </section>
+
+          <section class="card" aria-labelledby="c-device-title">
+            <h2 id="c-device-title">Buy clicks by device</h2>
+            <div class="chart" id="c-device"></div>
+          </section>
+        </div>
+
+        <h2 class="section-title">Survey answers</h2>
+        <p class="muted small section-sub">From people who reserved with an email. Each question is optional.</p>
+        <div class="grid-3">
+          <section class="card" aria-labelledby="c-stage-title">
+            <h3 id="c-stage-title">Baby stage</h3>
+            <div class="chart" id="c-stage"></div>
+          </section>
+          <section class="card" aria-labelledby="c-feature-title">
+            <h3 id="c-feature-title">Most wanted feature</h3>
+            <div class="chart" id="c-feature"></div>
+          </section>
+          <section class="card" aria-labelledby="c-would-title">
+            <h3 id="c-would-title">Would you buy at this price?</h3>
+            <div class="chart" id="c-would"></div>
+          </section>
+        </div>
+
+        <section class="card" aria-labelledby="buyers-title">
+          <div class="card__head card__head--wrap">
+            <h2 id="buyers-title">Who clicked Buy</h2>
+            <div class="table-tools">
+              <label for="buyer-search" class="sr-only">Search buyers</label>
+              <input id="buyer-search" type="search" placeholder="Search email, source, answers…">
+              <button type="button" class="btn btn--primary" id="download-csv">Download CSV</button>
+            </div>
+          </div>
+          <p class="muted small" id="buyers-count"></p>
+          <div class="table-wrap">
+            <table class="data-table" id="buyers-table">
+              <thead><tr></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+    </main>
+  </div>
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+</body>
+</html>
