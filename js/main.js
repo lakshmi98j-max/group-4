@@ -6,21 +6,25 @@
   "use strict";
 
   var T = window.Tracker;
-  var brand = (window.Brand && window.Brand.name) || "Wren";
+  var brand = (window.Brand && window.Brand.name) || "Dawn";
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
   function planName(plan) {
-    return plan === "plus" ? brand + " Band + " + brand + " Plus" : brand + " Band";
+    return plan === "onetime" ? brand + " Band (one-time)" : brand + " Membership (yearly)";
   }
 
   /* ---------- Prices ---------- */
 
   function fillPrices() {
-    $all('[data-price="band"]').forEach(function (el) { el.textContent = T.formatPrice(T.bandPrice); });
-    $all('[data-price="plus"]').forEach(function (el) { el.textContent = T.formatPrice(T.plusPrice); });
+    $all("[data-price]").forEach(function (el) {
+      el.textContent = T.formatPrice(T.planPrice(el.getAttribute("data-price")));
+    });
+    $all("[data-price-label]").forEach(function (el) {
+      el.textContent = T.priceLabel(el.getAttribute("data-price-label"));
+    });
   }
 
   /* ---------- Preview badge ---------- */
@@ -107,7 +111,7 @@
 
   /* ---------- Phone mockup ---------- */
 
-  var BREATHS_PER_MIN = 34;
+  var BREATHS_PER_MIN = 38;
 
   function breathShape(p) {
     // One breath: a quicker inhale, a slower exhale, then a short pause.
@@ -140,7 +144,7 @@
       rh: $('[data-live="rh"]'),
       asleep: $('[data-live="asleep"]')
     };
-    var minutes = 134;
+    var minutes = 75;
     var tick = 0;
     function drift(el, min, max, step) {
       if (!el) return;
@@ -152,7 +156,7 @@
       if (document.hidden) return;
       tick++;
       drift(els.hr, 117, 127, 2);
-      if (tick % 2 === 0) drift(els.breath, 32, 36, 1);
+      if (tick % 2 === 0) drift(els.breath, 36, 40, 1);
       if (tick % 5 === 0) drift(els.spo2, 97, 99, 1);
       if (tick % 9 === 0) drift(els.rh, 47, 49, 1);
       if (tick % 25 === 0 && els.asleep) {
@@ -409,7 +413,7 @@
     var submitBtn = $('button[type="submit"]', form);
     var views = $all("[data-view]", dialog);
     var titles = { form: "reserve-title", done: "done-title", already: "already-title" };
-    var state = { plan: "band", price: T.bandPrice, button: "", view: "form", submitted: false, opener: null };
+    var state = { plan: "membership", price: T.membershipPrice, button: "", view: "form", submitted: false, opener: null };
     var supportsDialog = typeof dialog.showModal === "function";
 
     function showView(name) {
@@ -434,7 +438,7 @@
     }
 
     function openReserve(btn) {
-      var plan = btn.getAttribute("data-plan") === "plus" ? "plus" : "band";
+      var plan = btn.getAttribute("data-plan") === "onetime" ? "onetime" : "membership";
       var button = btn.getAttribute("data-button") || "unknown";
       var known = T.getEmail();
 
@@ -442,7 +446,7 @@
       T.track("buy_click", { plan: plan, button: button });
 
       state = { plan: plan, price: T.planPrice(plan), button: button, view: "form", submitted: false, opener: btn };
-      $all("[data-modal-price]", dialog).forEach(function (n) { n.textContent = T.formatPrice(state.price); });
+      $all("[data-modal-price]", dialog).forEach(function (n) { n.textContent = T.priceLabel(plan); });
       $all("[data-modal-plan]", dialog).forEach(function (n) { n.textContent = planName(plan); });
 
       if (known) {
@@ -546,6 +550,8 @@
         baby_stage: radio("baby_stage"),
         wanted_feature: form.elements.wanted_feature.value || "",
         would_buy: radio("would_buy"),
+        pay_preference: radio("pay_preference"),
+        max_per_year: form.elements.max_per_year.value || "",
         updates_opt_in: form.elements.updates_opt_in.checked ? "yes" : "no"
       });
       T.setEmail(email);

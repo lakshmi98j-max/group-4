@@ -25,7 +25,8 @@ async function runFlow(page, consoleLines) {
   await page.waitForSelector('#reserve[open]');
   assert.strictEqual(await page.isVisible('[data-view="form"]'), true, 'form view shown');
   const text = await page.textContent('[data-view="form"] .modal__text');
-  assert.ok(/Reserve yours at \$\d+ and we'll email you first when orders open\. No payment now, no card needed\./.test(text), 'modal copy: ' + text);
+  assert.ok(/Reserve yours at \$\d+\/year and we'll email you first when orders open\. No payment now, no card needed\./.test(text), 'modal copy: ' + text);
+  assert.ok((await page.textContent('[data-modal-plan]')).includes('Membership'), 'hero Buy is the membership plan');
   assert.strictEqual(await page.evaluate(() => document.activeElement.id), 'r-email', 'focus moves to email field');
 
   // Invalid email is rejected
@@ -39,16 +40,18 @@ async function runFlow(page, consoleLines) {
   await page.check('input[name=baby_stage][value="0-3 months"]', { force: true });
   await page.selectOption('#r-feature', 'Breathing rate');
   await page.check('input[name=would_buy][value="Yes"]', { force: true });
+  await page.check('input[name=pay_preference][value="Yearly membership"]', { force: true });
+  await page.selectOption('#r-max', '$200 to $249');
   await page.check('#r-updates');
   await page.click('.reserve-form button[type=submit]');
   await page.waitForSelector('[data-view="done"]:not([hidden])');
   const done = (await page.textContent('[data-view="done"]')).replace(/\s+/g, ' ').trim();
-  assert.ok(done.includes("You're on the list! Wren isn't on sale yet, and you haven't been charged. We'll email you when pre-orders open."), done);
+  assert.ok(done.includes("You're on the list! Dawn isn't on sale yet, and you haven't been charged. We'll email you when pre-orders open."), done);
   await page.click('[data-view="done"] [data-close]');
   await page.waitForSelector('#reserve:not([open])', { state: 'attached' });
 
   // 4. Second buy click by the same visitor (pricing, Plus plan)
-  await page.click('[data-buy][data-plan="plus"]');
+  await page.click('[data-buy][data-plan="onetime"]');
   await page.waitForSelector('#reserve[open]');
   const already = (await page.textContent('[data-view="already"] .modal__title')).replace(/\s+/g, ' ').trim();
   assert.strictEqual(already, "You're already on the list as " + EMAIL);
@@ -105,15 +108,21 @@ async function modalCloseFlow(page) {
   assert.strictEqual(ev[2].button, 'hero');
   assert.strictEqual(ev[3].email, EMAIL, 'reserve email normalized');
   assert.strictEqual(ev[3].baby_stage, '0-3 months');
+  assert.strictEqual(ev[3].pay_preference, 'Yearly membership');
+  assert.strictEqual(ev[3].max_per_year, '$200 to $249');
+  assert.strictEqual(ev[3].plan, 'membership');
+  assert.strictEqual(ev[3].price, ev[3].price_variant, 'membership price = the yearly price variant');
   assert.strictEqual(ev[3].updates_opt_in, 'yes');
   assert.strictEqual(ev[4].email, EMAIL, 'second buy click carries email');
-  assert.strictEqual(ev[4].plan, 'plus');
-  assert.strictEqual(ev[4].price, ev[4].price_variant + 79, 'plus price = band + add-on');
+  assert.strictEqual(ev[4].plan, 'onetime');
+  assert.strictEqual(ev[4].price, 299, 'one-time price from config');
+  assert.ok([149, 199, 249].includes(ev[4].price_variant), 'price variant from config');
   log('Buyers data (preview):');
-  console.table(stored.buyers.map(b => ({ email: b.email, buy_clicks: b.buy_clicks, plan: b.plan, price_shown: b.price_shown, baby_stage: b.baby_stage, wanted_feature: b.wanted_feature, would_buy: b.would_buy, updates_opt_in: b.updates_opt_in, utm_source: b.utm_source, device: b.device })));
+  console.table(stored.buyers.map(b => ({ email: b.email, buy_clicks: b.buy_clicks, plan: b.plan, price_shown: b.price_shown, baby_stage: b.baby_stage, wanted_feature: b.wanted_feature, would_buy: b.would_buy, pay_preference: b.pay_preference, max_per_year: b.max_per_year, updates_opt_in: b.updates_opt_in, utm_source: b.utm_source, device: b.device })));
   assert.strictEqual(stored.buyers.length, 1, 'one buyer row');
   assert.strictEqual(stored.buyers[0].email, EMAIL);
   assert.strictEqual(stored.buyers[0].buy_clicks, 2, 'two clicks');
+  assert.strictEqual(stored.buyers[0].max_per_year, '$200 to $249');
 
   // Reload: price variant and visitor id persist, scroll_to_pricing not repeated in the same session
   const before = stored.events[0];
@@ -140,6 +149,26 @@ async function modalCloseFlow(page) {
   log('Admin buyers row:', row.join(' | '));
   assert.strictEqual(row[0], EMAIL);
   assert.strictEqual(row[1], '2');
+  const tc = await admin.evaluate(() => ['tc-agree', 'tc-customers', 'tc-status'].map(id => document.getElementById(id).textContent));
+  log('Admin test card [agreed $200+/yr, customers, status]:', tc.join(' | '));
+  assert.strictEqual(tc[0], '1 of 50', 'the reservation said $200 to $249, so it counts as agreeing');
+  assert.strictEqual(tc[1], '1 of 50');
+  // Willingness-to-pay rule on the test card, with edge cases added to the preview buyers.
+  await admin.evaluate(() => {
+    const extra = [
+      { email: 'a@x.com', plan: 'membership', price_shown: 199, would_buy: 'Yes', max_per_year: '' },                     // agrees (reserved at $199/yr)
+      { email: 'b@x.com', plan: 'membership', price_shown: 249, would_buy: 'Maybe at a lower price', max_per_year: '' },  // doubts the price: not counted
+      { email: 'c@x.com', plan: 'onetime', price_shown: 299, would_buy: '', max_per_year: '$250 or more' },                // agrees (said $250+/yr)
+      { email: 'd@x.com', plan: 'membership', price_shown: 149, would_buy: 'Yes', max_per_year: '$150 to $199' }           // below $200: not counted
+    ].map(b => Object.assign({ buy_clicks: 1, first_click: new Date().toISOString(), latest_click: new Date().toISOString() }, b));
+    const cur = JSON.parse(localStorage.getItem('fd_preview_buyers'));
+    localStorage.setItem('fd_preview_buyers', JSON.stringify(cur.concat(extra)));
+  });
+  await admin.click('#refresh');
+  await admin.waitForTimeout(200);
+  const agreed = await admin.textContent('#tc-agree');
+  log('Test card with 4 edge-case reservations added:', agreed, '|', await admin.textContent('#tc-customers'));
+  assert.strictEqual(agreed, '3 of 50', 'original + a@x (reserved at $199/yr) + c@x (said $250+/yr)');
   await admin.screenshot({ path: path.join(os.tmpdir(), 'admin-preview.png'), fullPage: true });
   await ctx.close();
 
@@ -190,7 +219,7 @@ async function modalCloseFlow(page) {
   log('events sheet rows:', evRows.map(r => r.event).join(', '));
   const buyersRows = env.table('buyers');
   log('buyers sheet (Apps Script):');
-  console.table(buyersRows.map(b => ({ email: b.email, buy_clicks: b.buy_clicks, plan: b.plan, price_shown: b.price_shown, baby_stage: b.baby_stage, wanted_feature: b.wanted_feature, would_buy: b.would_buy, updates_opt_in: b.updates_opt_in, utm_source: b.utm_source, utm_campaign: b.utm_campaign, device: b.device })));
+  console.table(buyersRows.map(b => ({ email: b.email, buy_clicks: b.buy_clicks, plan: b.plan, price_shown: b.price_shown, baby_stage: b.baby_stage, wanted_feature: b.wanted_feature, would_buy: b.would_buy, pay_preference: b.pay_preference, max_per_year: b.max_per_year, updates_opt_in: b.updates_opt_in, utm_source: b.utm_source, utm_campaign: b.utm_campaign, device: b.device })));
   assert.strictEqual(buyersRows.length, 1);
   assert.strictEqual(buyersRows[0].email, EMAIL);
   assert.strictEqual(buyersRows[0].buy_clicks, 2);

@@ -6,7 +6,7 @@
   "use strict";
 
   var CFG = window.SITE_CONFIG || {};
-  var SOURCE = "Wren"; // The name written in the HTML files.
+  var SOURCE = "Dawn"; // The name written in the HTML files.
   var brand = String(CFG.BRAND || SOURCE).trim() || SOURCE;
 
   function applyBrand() {

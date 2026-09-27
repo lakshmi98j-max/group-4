@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Wren · The smart sleep band for babies</title>
-  <meta name="description" content="Wren is a soft organic-cotton band with a small sensor pod worn at your baby's chest. See breathing, heart rate, oxygen, temperature, sleep position and more on your phone.">
-  <meta name="theme-color" content="#0d1330">
-  <meta property="og:title" content="Wren · The smart sleep band for babies">
-  <meta property="og:description" content="A soft band with a small sensor pod that tracks breathing, heart rate, oxygen, temperature and sleep position from your baby's chest.">
+  <title>Dawn · Peace of mind, measured in real time</title>
+  <meta name="description" content="Dawn is a soft band with an 18-gram sensor that rests on your baby's chest. Sleep, breathing, heart rate and blood oxygen all night, one calm morning score, and one light that matters.">
+  <meta name="theme-color" content="#f8f4ee">
+  <meta property="og:title" content="Dawn · Peace of mind, measured in real time">
+  <meta property="og:description" content="A soft baby band with an 18-gram sensor: four vitals all night, one light that matters, and a 3 a.m. guide that knows what to do.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23f5b971'/%3E%3Cpath d='M19.5 6.5a10 10 0 1 0 6 15.2A8.2 8.2 0 0 1 19.5 6.5z' fill='%230d1330'/%3E%3C/svg%3E">
-  <link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f8f4ee'/%3E%3Cpath d='M7 21a9 9 0 0 1 18 0z' fill='%23e4a064'/%3E%3Crect x='4' y='22.5' width='24' height='2.4' rx='1.2' fill='%232b3940'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/lora-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
   <script>document.documentElement.classList.add("js");</script>
   <script src="config.js" defer></script>
@@ -33,7 +34,7 @@
       <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></symbol>
       <symbol id="i-room" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M12 11.5s2.6 2.7 2.6 4.5a2.6 2.6 0 0 1-5.2 0c0-1.8 2.6-4.5 2.6-4.5z"/></symbol>
       <symbol id="i-log" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="16.5" rx="2.2"/><path d="M9 4.5V3h6v1.5"/><path d="M9 10h6M9 13.5h6M9 17h3.5"/></symbol>
-      <symbol id="i-band" viewBox="0 0 24 24"><ellipse cx="12" cy="11" rx="9" ry="4.5"/><rect x="9" y="12.5" width="6" height="4.5" rx="2.2"/></symbol>
+      <symbol id="i-band" viewBox="0 0 24 24"><rect x="2.5" y="9" width="19" height="7" rx="3.5"/><path d="M9 7.5a3 3 0 0 1 6 0v9a3 3 0 0 1-6 0z"/></symbol>
       <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2.6"/><path d="M11 18h2"/></symbol>
       <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
@@ -42,7 +43,14 @@
       <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
       <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13.2 14-14 0 9-5 14-13.2 14z"/><path d="M5 19l7.5-7.5"/></symbol>
       <symbol id="i-wash" viewBox="0 0 24 24"><path d="M3.5 7.5L5.5 19h13l2-11.5"/><path d="M3.5 7.5c2.1 1.5 4.3 1.5 6.4 0s4.2-1.5 6.3 0 3.3 1.3 4.3 0"/></symbol>
-      <symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 3h4v2.5l1.5 2V20a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 20V7.5l1.5-2z"/><path d="M8.5 11h7M8.5 15h7"/></symbol>
+      <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7.5" width="16" height="9" rx="2.2"/><path d="M21 10.5v3"/><path d="M6.5 10.5v3M9.5 10.5v3M12.5 10.5v3"/></symbol>
+      <symbol id="i-feather" viewBox="0 0 24 24"><path d="M20 4c-8 0-13 5-13 12v4"/><path d="M20 4c0 7-4 12-11 12"/><path d="M7 16l6-6"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></symbol>
+      <symbol id="i-people" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19c.6-3.4 2.8-5.5 5.5-5.5S13.4 15.6 14 19"/><path d="M14.5 14.2c.6-.4 1.3-.7 2-.7 2.3 0 4 1.8 4.5 4.5"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+      <symbol id="i-report" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 15.5h5M10 18.5h3"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5.5c0 4.5-3 7.8-7 9.5-4-1.7-7-5-7-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2.2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/><path d="M9 14.5l2 2 4-4"/></symbol>
     </defs>
   </svg>
 
@@ -50,24 +58,24 @@
 
   <header class="nav" id="top">
     <div class="nav__inner">
-      <a class="logo" href="#top" aria-label="Wren home">
+      <a class="logo" href="#top" aria-label="Dawn home">
         <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <circle cx="16" cy="16" r="15" class="logo__disc"/>
-          <path d="M19.5 6.5a10 10 0 1 0 6 15.2A8.2 8.2 0 0 1 19.5 6.5z" class="logo__cut"/>
-          <circle cx="12.4" cy="17.6" r="2.1" class="logo__dot"/>
+          <path d="M7 21a9 9 0 0 1 18 0z" class="logo__sun"/>
+          <path d="M16 6.5v3M8.2 9.7l2 2M23.8 9.7l-2 2" class="logo__rays"/>
+          <rect x="4" y="22.5" width="24" height="2.4" rx="1.2" class="logo__line"/>
         </svg>
-        <span class="logo__word">Wren</span>
+        <span class="logo__word">Dawn</span>
       </a>
       <nav class="nav__links" id="nav-links" aria-label="Sections">
+        <a href="#meet">Meet Dawn</a>
         <a href="#why">Why the chest</a>
         <a href="#tracks">What it tracks</a>
         <a href="#app">The app</a>
-        <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--glow btn--sm" type="button" data-buy data-plan="band" data-button="nav">Buy now</button>
+        <button class="btn btn--primary btn--sm" type="button" data-buy data-plan="membership" data-button="nav">Buy now</button>
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
           <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
         </button>
@@ -77,105 +85,109 @@
 
   <main id="main">
     <!-- 1. Hero -->
-    <section class="hero night" aria-labelledby="hero-title">
-      <div class="sky" aria-hidden="true">
-        <span class="moon"></span>
-        <span class="star" style="--x:8%;--y:18%;--d:0s"></span>
-        <span class="star" style="--x:22%;--y:8%;--d:1.2s"></span>
-        <span class="star star--sm" style="--x:35%;--y:26%;--d:2.1s"></span>
-        <span class="star" style="--x:54%;--y:12%;--d:.6s"></span>
-        <span class="star star--sm" style="--x:68%;--y:30%;--d:1.8s"></span>
-        <span class="star" style="--x:88%;--y:22%;--d:2.7s"></span>
-        <span class="star star--sm" style="--x:14%;--y:44%;--d:3.1s"></span>
-        <span class="star star--sm" style="--x:93%;--y:52%;--d:1.4s"></span>
-        <span class="star star--sm" style="--x:46%;--y:4%;--d:2.4s"></span>
-      </div>
-
+    <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <p class="eyebrow"><span class="eyebrow__time">9:40 pm</span> The smart sleep band for babies</p>
-          <h1 id="hero-title" class="display">Every breath, <em>gently</em> in view.</h1>
-          <p class="lede">Wren is a soft organic-cotton band with a small sensor pod that rests on your baby's chest, where breathing actually happens. Breathing, heart rate, oxygen, temperature and sleep position, live on your phone all night.</p>
+          <p class="eyebrow">The smart sleep band for babies</p>
+          <h1 id="hero-title" class="display">Peace of mind, <em>measured in real time.</em></h1>
+          <p class="lede">Dawn is a soft band with an 18-gram sensor that rests on your baby's chest. It watches sleep, breathing, heart rate and blood oxygen all night, learns what's normal for your baby, and tells you what matters with one light: green, yellow or red.</p>
 
           <div class="hero__buy">
             <div class="price-tag">
-              <span class="price-tag__amount" data-price="band"></span>
-              <span class="price-tag__note">one-time</span>
+              <span class="price-tag__amount" data-price="membership"></span>
+              <span class="price-tag__note">per year<br>band included</span>
             </div>
-            <button class="btn btn--glow btn--lg" type="button" data-buy data-plan="band" data-button="hero">Buy now</button>
+            <button class="btn btn--primary btn--lg" type="button" data-buy data-plan="membership" data-button="hero">Buy now</button>
           </div>
-          <p class="hero__alt">Or <span data-price="plus"></span> with a year of Wren Plus sleep insights. <a href="#pricing">Compare plans</a></p>
+          <p class="hero__alt">Or <span data-price-label="onetime"></span> once, no membership. <a href="#pricing">Compare plans</a></p>
 
           <ul class="chips" aria-label="Highlights">
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"/></svg>Organic cotton band</li>
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>Audio never leaves the pod</li>
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wash"/></svg>Machine-washable</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-feather"/></svg>18 grams</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-battery"/></svg>5-day battery</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>Your data, yours</li>
           </ul>
         </div>
 
         <div class="hero__visual">
-          <!-- Product: the band and the sensor pod -->
-          <svg class="band-art" viewBox="0 0 440 250" role="img" aria-labelledby="band-art-title">
-            <title id="band-art-title">The Wren band: a soft cotton loop with a small rounded sensor pod on the front.</title>
+          <div class="sunrise" aria-hidden="true"></div>
+
+          <!-- Product: the Dawn band and sensor pod -->
+          <svg class="band-art" viewBox="0 0 440 300" role="img" aria-labelledby="band-art-title">
+            <title id="band-art-title">The Dawn band: a soft oatmeal fabric strap with a small, rounded sage-green sensor pod on the front that glows with one status light.</title>
             <defs>
-              <linearGradient id="band-front" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#f4ead9"/>
-                <stop offset="1" stop-color="#dccdb6"/>
+              <linearGradient id="strap" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#efe6d8"/>
+                <stop offset="1" stop-color="#d8cbb6"/>
               </linearGradient>
-              <linearGradient id="pod-shell" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffffff"/>
-                <stop offset=".55" stop-color="#ece8f6"/>
-                <stop offset="1" stop-color="#c9c3e0"/>
+              <linearGradient id="strap-end" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#b9ab94"/>
+                <stop offset="1" stop-color="#d9ccb7"/>
               </linearGradient>
-              <radialGradient id="pod-led" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stop-color="#c8f5e8"/>
-                <stop offset=".45" stop-color="#93d8c4"/>
-                <stop offset="1" stop-color="#93d8c4" stop-opacity="0"/>
-              </radialGradient>
-              <pattern id="knit" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(20)">
-                <path d="M0 3h6" stroke="#b9a98f" stroke-opacity=".25" stroke-width="1"/>
+              <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse">
+                <path d="M0 2.5h5M2.5 0v5" stroke="#a8977c" stroke-opacity=".18" stroke-width="1"/>
               </pattern>
+              <linearGradient id="pod-body" x1="130" y1="70" x2="300" y2="250" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#bcd2b9"/>
+                <stop offset=".5" stop-color="#9dbb9b"/>
+                <stop offset="1" stop-color="#7c9c7c"/>
+              </linearGradient>
+              <radialGradient id="pod-shine" cx="180" cy="120" r="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#fff" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="led-glow" cx=".5" cy=".5" r=".5">
+                <stop offset="0" stop-color="currentColor" stop-opacity=".9"/>
+                <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="150%">
+                <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#5b4a33" flood-opacity=".25"/>
+              </filter>
             </defs>
-            <ellipse cx="220" cy="228" rx="150" ry="12" fill="#000" opacity=".28"/>
-            <!-- back of the loop -->
-            <path d="M42 120 A178 72 0 0 1 398 120" fill="none" stroke="#a79a86" stroke-width="40"/>
-            <path d="M42 120 A178 72 0 0 1 398 120" fill="none" stroke="#8d8171" stroke-width="40" stroke-opacity=".45"/>
-            <!-- front of the loop -->
-            <path d="M42 120 A178 72 0 0 0 398 120" fill="none" stroke="url(#band-front)" stroke-width="42"/>
-            <path d="M42 120 A178 72 0 0 0 398 120" fill="none" stroke="url(#knit)" stroke-width="42"/>
-            <path d="M58 120 A162 58 0 0 0 382 120" fill="none" stroke="#b9a98f" stroke-width="1.4" stroke-dasharray="4 5" opacity=".8"/>
-            <path d="M26 120 A194 86 0 0 0 414 120" fill="none" stroke="#b9a98f" stroke-width="1.4" stroke-dasharray="4 5" opacity=".8"/>
-            <!-- snap closure -->
-            <circle cx="72" cy="163" r="6" fill="#efe6d6" stroke="#b9a98f" stroke-width="1.5"/>
-            <circle cx="72" cy="163" r="2" fill="#b9a98f"/>
-            <!-- pod pocket -->
-            <rect x="160" y="160" width="120" height="66" rx="30" fill="#e6dac6"/>
-            <!-- sensor pod -->
-            <g class="pod">
-              <rect x="170" y="164" width="100" height="56" rx="26" fill="url(#pod-shell)"/>
-              <rect x="170.5" y="164.5" width="99" height="55" rx="25.5" fill="none" stroke="#fff" stroke-opacity=".8"/>
-              <path d="M226 180a12 12 0 1 0 7 19 9.6 9.6 0 0 1-7-19z" fill="#b8b0d6"/>
-              <circle class="pod__led-glow" cx="248" cy="178" r="9" fill="url(#pod-led)"/>
-              <circle cx="248" cy="178" r="2.6" fill="#6fcbb1"/>
+            <ellipse cx="220" cy="272" rx="165" ry="13" fill="#6f5a3e" opacity=".18"/>
+            <!-- strap -->
+            <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#strap)"/>
+            <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#weave)"/>
+            <ellipse cx="38" cy="159" rx="15" ry="39" fill="url(#strap-end)"/>
+            <path d="M52 128 Q220 102 330 116" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
+            <path d="M52 190 Q220 216 330 202" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
+            <!-- hook-and-loop tab -->
+            <rect x="322" y="108" width="98" height="100" rx="14" fill="#e6dccb"/>
+            <rect x="322" y="108" width="98" height="100" rx="14" fill="url(#weave)"/>
+            <rect x="331" y="117" width="80" height="82" rx="9" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".8"/>
+            <!-- sensor pod: a soft rounded shape with two small ears -->
+            <g class="pod" filter="url(#soft-shadow)">
+              <circle cx="152" cy="92" r="24" fill="url(#pod-body)"/>
+              <circle cx="258" cy="92" r="24" fill="url(#pod-body)"/>
+              <rect x="126" y="80" width="158" height="152" rx="66" fill="url(#pod-body)"/>
+              <rect x="126" y="80" width="158" height="152" rx="66" fill="url(#pod-shine)"/>
+            </g>
+            <g class="pod-led" data-led>
+              <circle cx="205" cy="160" r="24" fill="url(#led-glow)" class="pod-led__glow"/>
+              <rect x="202.5" y="148" width="5" height="24" rx="2.5" class="pod-led__bar"/>
             </g>
           </svg>
 
           <!-- Phone mockup of the parent app -->
-          <div class="phone" role="img" aria-label="The Wren app on a phone, showing live readings for a sleeping baby: breathing 34 breaths per minute, heart rate 122 bpm, blood oxygen 98 percent, skin temperature 36.6 degrees Celsius, sleeping on their back, nursery at 21 degrees and 48 percent humidity.">
+          <div class="phone" role="img" aria-label="The Dawn app on a phone, showing live vitals for a sleeping baby: all good, deep sleep for 1 hour 15 minutes, breathing 38 breaths per minute, heart rate 122 bpm, blood oxygen 98 percent, skin temperature 36.6 degrees Celsius, sleeping on their back.">
             <div class="phone__screen" aria-hidden="true">
-              <div class="app-status"><span>9:41</span><span class="app-status__icons"><i></i><i></i><i></i></span></div>
+              <div class="app-status"><span>3:12</span><span class="app-status__icons"><i></i><i></i><i></i></span></div>
               <div class="app-head">
                 <div>
-                  <p class="app-head__name">Olive</p>
-                  <p class="app-head__sub">Asleep <span data-live="asleep">2h 14m</span></p>
+                  <p class="app-head__name">Leo</p>
+                  <p class="app-head__sub">Live vitals</p>
                 </div>
-                <span class="live-pill"><span class="live-dot"></span>Live</span>
+                <span class="status-pill"><span class="status-dot"></span>All good</span>
+              </div>
+
+              <div class="app-card app-card--sleep">
+                <span class="app-label"><svg class="icon" focusable="false"><use href="#i-moon"/></svg>Sleep</span>
+                <span class="app-value"><b>Deep sleep</b><small data-live="asleep">1h 15m</small></span>
               </div>
 
               <div class="app-card app-card--breath">
                 <div class="app-card__row">
                   <span class="app-label"><svg class="icon" focusable="false"><use href="#i-breath"/></svg>Breathing</span>
-                  <span class="app-value"><b data-live="breath">34</b><small>breaths/min</small></span>
+                  <span class="app-value"><b data-live="breath">38</b><small>breaths/min</small></span>
                 </div>
                 <div class="wave" data-wave>
                   <svg class="wave__svg" viewBox="0 0 400 60" preserveAspectRatio="none"><path class="wave__path" d=""/></svg>
@@ -200,24 +212,89 @@
                   <span class="app-value app-value--text"><b>On back</b></span>
                 </div>
               </div>
-
-              <div class="app-card app-card--room">
-                <span class="app-label"><svg class="icon" focusable="false"><use href="#i-room"/></svg>Nursery</span>
-                <span class="app-room"><span data-temp-c="21" data-temp-dec="1">21.0</span><span data-temp-unit>°C</span> · <span data-live="rh">48</span>% RH</span>
-              </div>
-              <div class="app-foot"><span class="stage-chip">Quiet sleep</span><span class="app-foot__note">All readings in your ranges</span></div>
+              <div class="app-foot">Nursery <span data-temp-c="21" data-temp-dec="1">21.0</span><span data-temp-unit>°C</span> · <span data-live="rh">48</span>% humidity</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. Why the chest -->
-    <section class="section night night--2" id="why" aria-labelledby="why-title">
+    <!-- 2. The problem -->
+    <section class="section slate" id="story" aria-labelledby="story-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="eyebrow__time">10:15 pm</span> Why the chest</p>
-        <h2 id="why-title" class="display display--md">Measured where breathing happens.</h2>
-        <p class="section-lede">A foot or a wrist can only guess at breathing. The chest moves with every breath, so that is where Wren sits.</p>
+        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">3:47 am</span> Awake, again</p>
+        <h2 id="story-title" class="display display--md">You tiptoe to the crib, just to check they're breathing.</h2>
+        <p class="section-lede">Then again at 4:20. New parents sleep in broken stretches of a few hours, and the worry doesn't switch off. So you buy everything.</p>
+
+        <ul class="tried">
+          <li><b>A pulse oximeter.</b> <span>Numbers, no meaning.</span></li>
+          <li><b>Parenting forums.</b> <span>Horror stories, endless.</span></li>
+          <li><b>Videos.</b> <span>Generic advice. Every baby is different.</span></li>
+          <li><b>AI chatbots.</b> <span>Always "probably fine".</span></li>
+          <li><b>Grandma.</b> <span>All gut, no data.</span></li>
+        </ul>
+
+        <figure class="quotes" aria-labelledby="quotes-title">
+          <figcaption id="quotes-title" class="quotes__title">What parents told us in our interviews</figcaption>
+          <blockquote class="quote"><p>"The oximeter probably caused me more anxiety than it solved."</p></blockquote>
+          <blockquote class="quote"><p>"I'd want a triage answer at 3 a.m. that isn't just 'consult your pediatrician.'"</p></blockquote>
+          <blockquote class="quote"><p>"I wasn't sure whether it was a normal reaction or if we needed to visit the hospital."</p></blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 3. Meet Dawn -->
+    <section class="section cream" id="meet" aria-labelledby="meet-title">
+      <div class="wrap meet">
+        <div class="meet__copy">
+          <p class="eyebrow">Meet Dawn</p>
+          <h2 id="meet-title" class="display display--md">Four vitals. <em>All night.</em></h2>
+          <p class="section-lede">The kind of data you already track for yourself, made gentle enough for a newborn. Dawn learns your baby's own normal over the first weeks, so it can tell you when something is off for them, not for a chart.</p>
+          <ul class="vitals">
+            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>Sleep</span><span class="vitals__value">9h 20m</span></li>
+            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>Breathing</span><span class="vitals__value">38 <small>breaths/min</small></span></li>
+            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>Heart rate</span><span class="vitals__value">122 <small>bpm</small></span></li>
+            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>Blood oxygen</span><span class="vitals__value">98 <small>% SpO<sub>2</sub></small></span></li>
+          </ul>
+          <p class="small-note">Example readings.</p>
+        </div>
+        <div class="meet__facts">
+          <div class="fact"><span class="fact__big">18 g</span><span class="fact__text">Lighter than a AA battery.</span></div>
+          <div class="fact"><span class="fact__big">5 days</span><span class="fact__text">On one charge.</span></div>
+          <div class="fact"><span class="fact__big"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg></span><span class="fact__text"><b>Your data, yours.</b> Encrypted, never sold.</span></div>
+        </div>
+      </div>
+
+      <!-- One light that matters -->
+      <div class="wrap lights" id="light">
+        <h3 class="lights__title">One light that matters.</h3>
+        <p class="lights__lede">No feed to stare at. The pod and the app agree on one simple status.</p>
+        <ul class="lights__list">
+          <li class="light light--green">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Green</p>
+            <p>All within their normal. Sleep on.</p>
+          </li>
+          <li class="light light--yellow">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Yellow</p>
+            <p>Worth a look. Something is off from their usual, and the app says what.</p>
+          </li>
+          <li class="light light--red">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Red</p>
+            <p>Check now. Your phone alerts you right away and says why.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. Why the chest -->
+    <section class="section cream-2" id="why" aria-labelledby="why-title">
+      <div class="wrap">
+        <p class="eyebrow">Why the chest</p>
+        <h2 id="why-title" class="display display--md">We got this wrong first.</h2>
+        <p class="section-lede">Our first prototype was a band for the wrist and ankle. We moved it to the chest, because that is where breathing actually happens.</p>
 
         <div class="why-grid">
           <article class="why-card">
@@ -225,12 +302,12 @@
               <svg viewBox="0 0 160 90" class="breath-ring">
                 <ellipse class="breath-ring__outer" cx="80" cy="45" rx="62" ry="24"/>
                 <ellipse class="breath-ring__inner" cx="80" cy="45" rx="50" ry="17"/>
-                <rect x="66" y="58" width="28" height="15" rx="7.5" class="breath-ring__pod"/>
+                <rect x="66" y="56" width="28" height="18" rx="9" class="breath-ring__pod"/>
               </svg>
               <span class="breath-label"><span>Inhale</span><span>Exhale</span></span>
             </div>
-            <h3>Breathing, read directly</h3>
-            <p>Each breath lifts the chest and gently stretches the band. The pod's motion sensor follows that rise and fall, so breathing rate is measured breath by breath, not inferred from somewhere else.</p>
+            <h3>Breathing, measured where it happens</h3>
+            <p>Each breath lifts the chest and gently stretches the band. The pod's motion sensor follows that rise and fall, so breathing rate is read breath by breath, not guessed from a foot or a wrist.</p>
           </article>
           <article class="why-card">
             <div class="why-card__art" aria-hidden="true">
@@ -238,13 +315,10 @@
                 <path d="M10 70 Q 45 30 80 44 T 150 36" class="night-art__line"/>
                 <circle cx="118" cy="26" r="13" class="night-art__moon"/>
                 <circle cx="124" cy="22" r="11" class="night-art__cut"/>
-                <circle cx="30" cy="22" r="1.6" class="night-art__star"/>
-                <circle cx="56" cy="14" r="1.2" class="night-art__star"/>
-                <circle cx="146" cy="60" r="1.4" class="night-art__star"/>
               </svg>
             </div>
             <h3>Stays on through the night</h3>
-            <p>A soft stretch band with no straps to wriggle out of. The pod sits flat in a padded pocket, so it stays in place through kicks, wriggles and nighttime feeds.</p>
+            <p>A soft stretch band with a wide hook-and-loop tab and nothing to wriggle out of. The pod sits flat against the chest, so it stays in place through kicks, wriggles and night feeds.</p>
           </article>
           <article class="why-card">
             <div class="why-card__art" aria-hidden="true">
@@ -257,19 +331,19 @@
               </svg>
             </div>
             <h3>Senses sleep position</h3>
-            <p>Sitting on the torso, Wren can tell back from side from tummy, and sends a rollover alert to your phone when your baby turns onto their tummy.</p>
+            <p>Sitting on the torso, Dawn can tell back from side from tummy, and sends a rollover alert to your phone when your baby turns onto their tummy.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- 3. What it tracks -->
-    <section class="section night night--3" id="tracks" aria-labelledby="tracks-title">
+    <!-- 5. What it tracks -->
+    <section class="section paper" id="tracks" aria-labelledby="tracks-title">
       <div class="wrap">
         <div class="section-head">
           <div>
-            <p class="eyebrow"><span class="eyebrow__time">12:30 am</span> What it tracks</p>
-            <h2 id="tracks-title" class="display display--md">Ten signals. One calm screen.</h2>
+            <p class="eyebrow">What it tracks</p>
+            <h2 id="tracks-title" class="display display--md">Everything you check at 3 a.m., in one place.</h2>
           </div>
           <div class="unit-toggle" role="group" aria-label="Temperature unit">
             <button type="button" data-unit="c" aria-pressed="true">°C</button>
@@ -278,41 +352,41 @@
         </div>
 
         <ul class="signal-grid">
-          <li class="signal">
+          <li class="signal signal--core">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>
             <h3>Breathing rate</h3>
             <p class="unit">breaths/min</p>
             <p>Read from the rise and fall of the chest, breath by breath.</p>
           </li>
-          <li class="signal">
+          <li class="signal signal--core">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>
             <h3>Heart rate</h3>
             <p class="unit">bpm</p>
             <p>An optical sensor on the skin side of the pod, sampled all night.</p>
           </li>
-          <li class="signal">
+          <li class="signal signal--core">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>
             <h3>Blood oxygen</h3>
             <p class="unit">SpO<sub>2</sub> %</p>
             <p>Oxygen saturation and how it trends through the night.</p>
           </li>
+          <li class="signal signal--core">
+            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+            <h3>Active vs quiet sleep</h3>
+            <p class="unit">sleep state · h:mm</p>
+            <p>How the night splits between active sleep, quiet sleep and awake.</p>
+          </li>
           <li class="signal">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-thermo"/></svg>
             <h3>Skin temperature</h3>
             <p class="unit">°C / °F</p>
-            <p>Chest skin temperature, so you can see if they are running warm or cool.</p>
+            <p>Running warm after a vaccine? See the trend, not a single guess.</p>
           </li>
           <li class="signal">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-position"/></svg>
             <h3>Sleep position</h3>
             <p class="unit">back · side · tummy</p>
             <p>Knows which way they are lying, with a rollover alert for tummy sleeping.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
-            <h3>Active vs quiet sleep</h3>
-            <p class="unit">sleep state · h:mm</p>
-            <p>How the night splits between active sleep, quiet sleep and awake.</p>
           </li>
           <li class="signal">
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg>
@@ -336,18 +410,51 @@
             <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-log"/></svg>
             <h3>Feeding &amp; diaper log</h3>
             <p class="unit">time · mL / oz</p>
-            <p>Log feeds and changes in a tap, lined up with the night's sleep.</p>
+            <p>Feeds, wet and dirty diapers in a tap, lined up with the night's sleep.</p>
           </li>
         </ul>
+        <p class="small-note"><span class="core-key" aria-hidden="true"></span>The four core vitals, tracked all night.</p>
       </div>
     </section>
 
-    <!-- 4. App dashboard preview -->
-    <section class="section night night--4" id="app" aria-labelledby="app-title">
+    <!-- 6. The app -->
+    <section class="section slate" id="app" aria-labelledby="app-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="eyebrow__time">3:12 am</span> The app</p>
-        <h2 id="app-title" class="display display--md">The whole night, at a glance.</h2>
-        <p class="section-lede">In the morning, Wren turns the night into one simple timeline: when they slept deeply, when they stirred, and how breathing and heart rate settled.</p>
+        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">3:12 am</span> The app</p>
+        <h2 id="app-title" class="display display--md">Dawn tells you first. <em>Mira knows what to do.</em></h2>
+        <p class="section-lede">One morning score instead of a feed to watch, a heads-up before you'd have noticed, and calm next steps when you're not sure.</p>
+
+        <div class="app-trio">
+          <article class="app-tile">
+            <h3 class="app-tile__title">Your morning score</h3>
+            <div class="score">
+              <svg class="score__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <circle cx="60" cy="60" r="50" class="score__track"/>
+                <circle cx="60" cy="60" r="50" class="score__fill" pathLength="100" stroke-dasharray="86 100"/>
+              </svg>
+              <div class="score__text"><span class="score__num">86</span><span class="score__label">Good night</span></div>
+            </div>
+            <p>One number for the whole night: sleep, breathing and heart rate against your baby's own normal.</p>
+          </article>
+
+          <article class="app-tile">
+            <h3 class="app-tile__title">Dawn tells you first</h3>
+            <ul class="notes">
+              <li><span class="notes__time">3:12 AM</span>Awake 40 mins. Still settling.</li>
+              <li><span class="notes__time">4:05 AM</span>Short night. 4.1 hrs total.</li>
+              <li><span class="notes__time">5:20 AM</span>Due a feed. It's been 4 hrs.</li>
+            </ul>
+          </article>
+
+          <article class="app-tile">
+            <h3 class="app-tile__title">Mira, your 3 a.m. guide</h3>
+            <div class="mira">
+              <p class="mira__q">Crying since the last feed and won't settle.</p>
+              <p class="mira__a">Try burping him. Then bicycle kicks. If he's still unsettled after 20 minutes or seems unwell, call your pediatrician. I can share tonight's readings with them.</p>
+            </div>
+            <p class="mira__note">Mira is our AI guide. It gives general guidance and tells you when to call a doctor. It is not medical advice.</p>
+          </article>
+        </div>
 
         <figure class="dash" aria-labelledby="dash-caption">
           <div class="dash__top">
@@ -373,10 +480,41 @@
       </div>
     </section>
 
-    <!-- 5. How it works -->
-    <section class="section dawn" id="how" aria-labelledby="how-title">
+    <!-- 7. The village -->
+    <section class="section cream" id="village" aria-labelledby="village-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="eyebrow__time">5:50 am</span> How it works</p>
+        <p class="eyebrow">It takes a village</p>
+        <h2 id="village-title" class="display display--md">All at Dawn.</h2>
+        <p class="section-lede">Parents who've been there, your pediatrician, and your baby's records, together in one calm app.</p>
+        <ul class="village">
+          <li class="village__item">
+            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-people"/></svg>
+            <h3>Parents who've been there</h3>
+            <p>Ask the Dawn community of parents with babies the same age, and see what worked for them.</p>
+          </li>
+          <li class="village__item">
+            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg>
+            <h3>Find a pediatrician nearby</h3>
+            <p>Find one near you for a routine question or an urgent one, and add their reports to your baby's record.</p>
+          </li>
+          <li class="village__item">
+            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-report"/></svg>
+            <h3>Doctor-ready in one tap</h3>
+            <p>Share a clear summary of the night, the week or the symptom, instead of trying to describe it from memory.</p>
+          </li>
+          <li class="village__item">
+            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg>
+            <h3>Vaccines and milestones</h3>
+            <p>A vaccine tracker with reminders, plus a journal of firsts, growth and milestones as they grow.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. How it works -->
+    <section class="section cream-2" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
         <h2 id="how-title" class="display display--md">Three steps to a calmer night.</h2>
 
         <ol class="steps">
@@ -384,25 +522,25 @@
             <span class="step__num" aria-hidden="true">1</span>
             <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-band"/></svg>
             <h3>Slip on the band</h3>
-            <p>Click the pod into its pocket and wrap the band around your baby's chest, over a bodysuit or on skin. It takes about ten seconds.</p>
+            <p>Click the pod into the band and wrap it around your baby's chest, over a bodysuit or on skin. It takes about ten seconds.</p>
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">2</span>
             <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
             <h3>Pair with the app</h3>
-            <p>Plug in the dock, open the Wren app and follow three screens. The pod talks to the dock, and the dock talks to your phone.</p>
+            <p>Plug in the dock, open the Dawn app and follow three screens. The pod talks to the dock, and the dock talks to your phone.</p>
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">3</span>
             <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
             <h3>Rest, and glance when you like</h3>
-            <p>Check live readings any time, get a notification when a reading moves outside the ranges you set, and wake up to the night's summary.</p>
+            <p>Check live vitals any time, get an alert when something is off from your baby's normal, and wake up to one morning score.</p>
           </li>
         </ol>
 
         <div class="specs">
           <h3 class="specs__title">Specs</h3>
-          <p class="specs__note">Target specs. Wren is in development, so details may change.</p>
+          <p class="specs__note">Target specs. Dawn is in development, so details may change.</p>
           <div class="table-scroll">
             <table class="specs-table">
               <tbody>
@@ -416,10 +554,10 @@
                     </ul>
                   </td>
                 </tr>
-                <tr><th scope="row">Band</th><td>Organic cotton knit (95% organic cotton, 5% elastane), padded pod pocket, soft flat seams</td></tr>
-                <tr><th scope="row">Sensor pod</th><td>38 × 28 × 10 mm, 12 g, smooth rounded silicone shell</td></tr>
+                <tr><th scope="row">Band</th><td>Soft organic cotton knit with a little stretch, wide hook-and-loop tab, soft flat seams</td></tr>
+                <tr><th scope="row">Sensor pod</th><td>18 g, rounded silicone shell, one green, yellow or red status light</td></tr>
                 <tr><th scope="row">Sensors</th><td>Motion sensor (breathing, position, movement), optical sensor (heart rate, SpO<sub>2</sub>), skin temperature sensor, microphone for on-device cry and cough detection</td></tr>
-                <tr><th scope="row">Battery life</th><td>Up to 3 nights (about 36 hours) per charge</td></tr>
+                <tr><th scope="row">Battery life</th><td>Up to 5 days per charge</td></tr>
                 <tr><th scope="row">Charging</th><td>Magnetic charging dock, full charge in about 90 minutes, USB-C power</td></tr>
                 <tr><th scope="row">Dock</th><td>Room temperature and humidity sensor, connects to 2.4 GHz home Wi-Fi</td></tr>
                 <tr><th scope="row">Connection</th><td>Bluetooth Low Energy from pod to dock</td></tr>
@@ -432,66 +570,68 @@
       </div>
     </section>
 
-    <!-- 6. Pricing -->
-    <section class="section day" id="pricing" aria-labelledby="pricing-title">
+    <!-- 9. Pricing -->
+    <section class="section paper" id="pricing" aria-labelledby="pricing-title">
       <div class="wrap">
-        <p class="eyebrow eyebrow--day"><span class="eyebrow__time">6:30 am</span> Pricing</p>
-        <h2 id="pricing-title" class="display display--md">Choose your Wren.</h2>
-        <p class="section-lede">Both plans include the band, the sensor pod, the charging dock and live readings in the app.</p>
+        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">6:30 am</span> Pricing</p>
+        <h2 id="pricing-title" class="display display--md">Choose how you'd like Dawn.</h2>
+        <p class="section-lede">Both include the band, the sensor pod, the charging dock, live vitals and the green, yellow, red light.</p>
 
         <div class="plans">
-          <article class="plan" aria-labelledby="plan-band-title">
-            <h3 id="plan-band-title" class="plan__name">Wren Band</h3>
-            <p class="plan__price"><span data-price="band"></span></p>
-            <p class="plan__term">One-time price</p>
+          <article class="plan plan--featured" aria-labelledby="plan-membership-title">
+            <p class="plan__flag">Band included</p>
+            <h3 id="plan-membership-title" class="plan__name">Dawn Membership</h3>
+            <p class="plan__price"><span data-price="membership"></span><span class="plan__per">/year</span></p>
+            <p class="plan__term">Billed yearly. Cancel anytime.</p>
             <ul class="plan__list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Wren band in your size and sensor pod</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Charging dock with nursery climate sensor</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Live readings and alerts in the app</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>30 days of sleep history</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Dawn band, pod and charging dock</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Live vitals and the one-light status</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Morning score, trends and your baby's own normal</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Mira, your 3 a.m. guide</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Doctor-ready reports in one tap</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Parent community and vaccine tracker</li>
             </ul>
-            <button class="btn btn--ink btn--block" type="button" data-buy data-plan="band" data-button="pricing">Buy Wren Band</button>
+            <button class="btn btn--sun btn--block" type="button" data-buy data-plan="membership" data-button="pricing">Buy Dawn Membership</button>
           </article>
 
-          <article class="plan plan--featured" aria-labelledby="plan-plus-title">
-            <p class="plan__flag">Includes 1 year of Wren Plus</p>
-            <h3 id="plan-plus-title" class="plan__name">Wren Band + Wren Plus</h3>
-            <p class="plan__price"><span data-price="plus"></span></p>
-            <p class="plan__term">One-time price, first year of membership included</p>
+          <article class="plan" aria-labelledby="plan-onetime-title">
+            <h3 id="plan-onetime-title" class="plan__name">Dawn Band</h3>
+            <p class="plan__price"><span data-price="onetime"></span></p>
+            <p class="plan__term">One-time price. No membership.</p>
             <ul class="plan__list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Everything in Wren Band</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>1 year of Wren Plus sleep insights membership</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Weekly sleep trends and patterns as they grow</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Unlimited sleep history</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Shareable night summaries (PDF)</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Dawn band, pod and charging dock</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Live vitals and the one-light status</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Alerts to your phone</li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>7 days of history</li>
             </ul>
-            <button class="btn btn--glow btn--block" type="button" data-buy data-plan="plus" data-button="pricing">Buy Wren Band + Plus</button>
+            <button class="btn btn--primary btn--block" type="button" data-buy data-plan="onetime" data-button="pricing">Buy Dawn Band</button>
           </article>
+
           <aside class="plan plan--box" aria-labelledby="box-title">
             <h3 id="box-title" class="plan__name">In the box</h3>
             <ul class="box-list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-band"/></svg><div><b>Wren band</b><span>Organic cotton, in Small, Medium or Large</span></div></li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg><div><b>Sensor pod</b><span>Clicks into the band's padded pocket</span></div></li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-band"/></svg><div><b>Dawn band</b><span>Organic cotton, in Small, Medium or Large</span></div></li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg><div><b>Sensor pod</b><span>18 g, with one status light</span></div></li>
               <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-room"/></svg><div><b>Charging dock</b><span>Also measures nursery temperature and humidity</span></div></li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg><div><b>The Wren app</b><span>Free for iPhone and Android</span></div></li>
+              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg><div><b>The Dawn app</b><span>For iPhone and Android</span></div></li>
             </ul>
           </aside>
         </div>
-        <p class="plans__foot">Prices in <span data-currency>USD</span>. After the first year, Wren Plus is optional. The band and live readings keep working without it.</p>
+        <p class="plans__foot">Prices in <span data-currency>USD</span>. You can switch from the one-time plan to a membership later.</p>
       </div>
     </section>
 
-    <!-- 7. FAQ -->
-    <section class="section day day--2" id="faq" aria-labelledby="faq-title">
+    <!-- 10. FAQ -->
+    <section class="section cream" id="faq" aria-labelledby="faq-title">
       <div class="wrap wrap--narrow">
-        <p class="eyebrow eyebrow--day"><span class="eyebrow__time">7:05 am</span> Questions</p>
+        <p class="eyebrow">Questions</p>
         <h2 id="faq-title" class="display display--md">Good morning. Ask away.</h2>
 
         <div class="faq">
           <details>
-            <summary>Is Wren a medical device?</summary>
+            <summary>Is Dawn a medical device?</summary>
             <div class="faq__body">
-              <p>No. Wren is a concept product in development and is not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and it does not replace safe sleep practices or advice from your pediatrician.</p>
+              <p>No. Dawn is a concept product in development and is not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and it does not replace safe sleep practices or advice from your pediatrician.</p>
               <p>Always follow safe sleep guidance: baby on their back, on a firm, flat surface, with nothing else in the crib.</p>
             </div>
           </details>
@@ -502,9 +642,21 @@
             </div>
           </details>
           <details>
+            <summary>Membership or one-time: what's the difference?</summary>
+            <div class="faq__body">
+              <p>Both come with the band, pod and dock, live vitals, alerts and the green, yellow, red light. The membership adds the morning score and trends, Mira, doctor-ready reports, unlimited history, the parent community and the vaccine tracker, billed once a year. The one-time plan is a single payment with 7 days of history.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What is Mira?</summary>
+            <div class="faq__body">
+              <p>Mira is Dawn's AI guide. It looks at your baby's readings against their own normal and suggests calm next steps, like what to try when a baby won't settle, and it tells you clearly when it's time to call your pediatrician. Mira gives general guidance, not medical advice. In an emergency, call your local emergency number.</p>
+            </div>
+          </details>
+          <details>
             <summary>Is my data private?</summary>
             <div class="faq__body">
-              <p>Privacy is built into the design. Cry and cough detection runs on the pod itself, and audio is never uploaded. Readings are encrypted on their way to your phone and in storage, and your family's data will never be sold.</p>
+              <p>Your data is yours. Cry and cough detection runs on the pod itself, and audio is never uploaded. Readings are encrypted on their way to your phone and in storage, you choose what to share with your pediatrician, and your family's data will never be sold.</p>
               <p>On this website, we only collect what is described in our <a href="privacy.html">privacy notice</a>.</p>
             </div>
           </details>
@@ -517,7 +669,7 @@
           <details>
             <summary>What is it made of?</summary>
             <div class="faq__body">
-              <p>The band is a soft organic cotton knit with a little stretch, with flat seams and no wires in the fabric. The pod has a smooth, rounded silicone shell and sits in a padded pocket, so nothing hard presses on your baby's skin.</p>
+              <p>The band is a soft organic cotton knit with a little stretch, with flat seams and no wires in the fabric. The 18-gram pod has a smooth, rounded silicone shell, so nothing hard or heavy presses on your baby's skin.</p>
             </div>
           </details>
           <details>
@@ -526,28 +678,35 @@
               <p>Pop the pod out, then machine wash the band cold on a gentle cycle and lay it flat to dry. Wipe the pod with a damp cloth. Many parents keep a second band so one is always fresh.</p>
             </div>
           </details>
+          <details>
+            <summary>What's next for Dawn?</summary>
+            <div class="faq__body">
+              <p>The band comes first. After that we're working on a movement monitor, a smart cradle and a smart diaper that all share one app, growing with your baby from birth to toddler.</p>
+            </div>
+          </details>
         </div>
 
         <div class="cta-end">
-          <p>Ready to reserve yours?</p>
-          <a class="btn btn--glow btn--lg" href="#pricing">See plans</a>
+          <p>Peace with Dawn.</p>
+          <a class="btn btn--primary btn--lg" href="#pricing">See plans</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer night">
+  <footer class="footer">
     <div class="wrap footer__inner">
-      <a class="logo logo--footer" href="#top" aria-label="Wren, back to top">
+      <a class="logo logo--footer" href="#top" aria-label="Dawn, back to top">
         <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <circle cx="16" cy="16" r="15" class="logo__disc"/>
-          <path d="M19.5 6.5a10 10 0 1 0 6 15.2A8.2 8.2 0 0 1 19.5 6.5z" class="logo__cut"/>
-          <circle cx="12.4" cy="17.6" r="2.1" class="logo__dot"/>
+          <path d="M7 21a9 9 0 0 1 18 0z" class="logo__sun"/>
+          <path d="M16 6.5v3M8.2 9.7l2 2M23.8 9.7l-2 2" class="logo__rays"/>
+          <rect x="4" y="22.5" width="24" height="2.4" rx="1.2" class="logo__line"/>
         </svg>
-        <span class="logo__word">Wren</span>
+        <span class="logo__word">Dawn</span>
       </a>
+      <p class="footer__tag">Peace of mind, for beautiful babies and their beautiful mothers.</p>
       <p class="footer__disclaimer">Concept product in development. Not a medical device. Not intended to diagnose, treat, cure, or prevent any disease.</p>
-      <p class="footer__links"><a href="privacy.html">Privacy</a><span aria-hidden="true">·</span><span>© <span data-year>2026</span> Wren</span></p>
+      <p class="footer__links"><a href="privacy.html">Privacy</a><span aria-hidden="true">·</span><span>© <span data-year>2026</span> Dawn</span></p>
     </div>
   </footer>
 
@@ -560,9 +719,9 @@
 
       <!-- View: form -->
       <div class="modal__view" data-view="form">
-        <h2 id="reserve-title" class="modal__title">Reserve your Wren</h2>
-        <p class="modal__text">Wren ships soon. Reserve yours at <strong data-modal-price></strong> and we'll email you first when orders open. No payment now, no card needed.</p>
-        <p class="modal__plan">Plan: <span data-modal-plan>Wren Band</span></p>
+        <h2 id="reserve-title" class="modal__title">Reserve your Dawn</h2>
+        <p class="modal__text">Dawn ships soon. Reserve yours at <strong data-modal-price></strong> and we'll email you first when orders open. No payment now, no card needed.</p>
+        <p class="modal__plan">Plan: <span data-modal-plan>Dawn Membership</span></p>
 
         <form class="reserve-form" novalidate>
           <div class="field">
@@ -599,6 +758,10 @@
                 <option>Cry and cough detection</option>
                 <option>Room temperature and humidity</option>
                 <option>Feeding and diaper log</option>
+                <option>Mira, the 3 a.m. guide</option>
+                <option>Doctor-ready reports</option>
+                <option>Parent community</option>
+                <option>Vaccine tracker</option>
               </select>
             </div>
 
@@ -610,6 +773,27 @@
                 <label class="choice"><input type="radio" name="would_buy" value="No, just curious"><span>No, just curious</span></label>
               </div>
             </fieldset>
+
+            <fieldset class="field">
+              <legend>How would you rather pay?</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="pay_preference" value="Yearly membership"><span>Yearly membership</span></label>
+                <label class="choice"><input type="radio" name="pay_preference" value="One-time purchase"><span>One-time purchase</span></label>
+                <label class="choice"><input type="radio" name="pay_preference" value="Not sure yet"><span>Not sure yet</span></label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="r-max">The most you'd pay per year for Dawn</label>
+              <select id="r-max" name="max_per_year">
+                <option value="">Choose one (optional)</option>
+                <option>Less than $100</option>
+                <option>$100 to $149</option>
+                <option>$150 to $199</option>
+                <option>$200 to $249</option>
+                <option>$250 or more</option>
+              </select>
+            </div>
           </fieldset>
 
           <label class="check">
@@ -618,26 +802,26 @@
           </label>
 
           <div class="modal__actions">
-            <button class="btn btn--glow btn--block btn--lg" type="submit">Reserve my spot</button>
-            <p class="modal__fine">We'll only use your email to tell you about Wren. Unsubscribe anytime. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></p>
+            <button class="btn btn--primary btn--block btn--lg" type="submit">Reserve my spot</button>
+            <p class="modal__fine">We'll only use your email to tell you about Dawn. Unsubscribe anytime. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></p>
           </div>
         </form>
       </div>
 
       <!-- View: success -->
       <div class="modal__view" data-view="done" hidden>
-        <div class="modal__moon" aria-hidden="true"></div>
+        <div class="modal__sun" aria-hidden="true"></div>
         <h2 class="modal__title" id="done-title" tabindex="-1">You're on the list!</h2>
-        <p class="modal__text">Wren isn't on sale yet, and you haven't been charged. We'll email you when pre-orders open.</p>
-        <button class="btn btn--ink btn--block" type="button" data-close>Done</button>
+        <p class="modal__text">Dawn isn't on sale yet, and you haven't been charged. We'll email you when pre-orders open.</p>
+        <button class="btn btn--primary btn--block" type="button" data-close>Done</button>
       </div>
 
       <!-- View: already on the list -->
       <div class="modal__view" data-view="already" hidden>
-        <div class="modal__moon" aria-hidden="true"></div>
+        <div class="modal__sun" aria-hidden="true"></div>
         <h2 class="modal__title" id="already-title" tabindex="-1">You're already on the list as <span class="modal__email" data-known-email></span></h2>
-        <p class="modal__text">Wren isn't on sale yet and nothing has been charged. We'll email you as soon as pre-orders open.</p>
-        <button class="btn btn--ink btn--block" type="button" data-close>Done</button>
+        <p class="modal__text">Dawn isn't on sale yet and nothing has been charged. We'll email you as soon as pre-orders open.</p>
+        <button class="btn btn--primary btn--block" type="button" data-close>Done</button>
         <button class="linkish" type="button" data-other-email>Use a different email</button>
       </div>
     </div>
