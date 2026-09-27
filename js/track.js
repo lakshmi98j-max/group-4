@@ -159,7 +159,7 @@
       var n = Number(list[i]);
       if (isFinite(n) && n > 0) out.push(n);
     }
-    return out.length ? out : [249];
+    return out.length ? out : [199];
   }
 
   function assignPrice() {
@@ -177,13 +177,13 @@
     return pick;
   }
 
-  var bandPrice = assignPrice();
-  var plusAddOn = Number(CFG.plusAddOn);
-  if (!isFinite(plusAddOn) || plusAddOn < 0) plusAddOn = 0;
-  var plusPrice = bandPrice + plusAddOn;
+  // Two plans: "membership" (yearly price, the one being price-tested) and "onetime".
+  var membershipPrice = assignPrice();
+  var oneTimePrice = Number(CFG.oneTimePrice);
+  if (!isFinite(oneTimePrice) || oneTimePrice <= 0) oneTimePrice = 299;
 
   function planPrice(plan) {
-    return plan === "plus" ? plusPrice : bandPrice;
+    return plan === "onetime" ? oneTimePrice : membershipPrice;
   }
 
   function formatPrice(n) {
@@ -191,6 +191,11 @@
     var rounded = Math.round(n * 100) / 100;
     var text = rounded % 1 === 0 ? String(rounded) : rounded.toFixed(2);
     return symbol + text;
+  }
+
+  // "$199/year" for the membership, "$299" for the one-time plan.
+  function priceLabel(plan) {
+    return formatPrice(planPrice(plan)) + (plan === "onetime" ? "" : "/year");
   }
 
   /* ---------- Device ---------- */
@@ -240,7 +245,7 @@
     } catch (e) { /* ignore */ }
   }
 
-  var SURVEY_FIELDS = ["baby_stage", "wanted_feature", "would_buy", "updates_opt_in"];
+  var SURVEY_FIELDS = ["baby_stage", "wanted_feature", "would_buy", "pay_preference", "max_per_year", "updates_opt_in"];
 
   function track(name, extra) {
     extra = extra || {};
@@ -253,8 +258,8 @@
       session_id: sessionId,
       email: extra.email !== undefined ? normalizeEmail(extra.email) : getEmail(),
       plan: plan,
-      price: plan ? planPrice(plan) : bandPrice,
-      price_variant: bandPrice,
+      price: planPrice(plan || "membership"),
+      price_variant: membershipPrice,
       button: clip(extra.button, 40),
       utm_source: attribution.utm_source || "",
       utm_medium: attribution.utm_medium || "",
@@ -290,8 +295,9 @@
     isValidEmail: isValidEmail,
     planPrice: planPrice,
     formatPrice: formatPrice,
-    bandPrice: bandPrice,
-    plusPrice: plusPrice,
+    priceLabel: priceLabel,
+    membershipPrice: membershipPrice,
+    oneTimePrice: oneTimePrice,
     isPreview: isPreview,
     visitorId: visitorId,
     device: device

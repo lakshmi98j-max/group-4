@@ -12,14 +12,14 @@ t('creates sheets with header rows', () => {
   env.post(base({ event: 'page_view' }));
   assert.deepStrictEqual(env.sheets.events.data[0].slice(0, 3), ['server_ts', 'event', 'client_ts']);
   assert.strictEqual(env.sheets.events.frozen, 1);
-  env.post(base({ event: 'reserve', email: 'a@b.co', plan: 'band' }));
+  env.post(base({ event: 'reserve', email: 'a@b.co', plan: 'membership' }));
   assert.strictEqual(env.sheets.buyers.data[0][0], 'email');
 });
 
 t('uses a lock for every write and releases it', () => {
   const env = createEnv();
   env.post(base({ event: 'page_view' }));
-  env.post(base({ event: 'buy_click', plan: 'band', button: 'hero' }));
+  env.post(base({ event: 'buy_click', plan: 'membership', button: 'hero' }));
   assert.deepStrictEqual(env.lockLog, ['lock', 'release', 'lock', 'release']);
 });
 
@@ -57,37 +57,39 @@ t('normalizes email and ignores invalid ones', () => {
 t('spec scenario: anonymous click, reserve, click again -> 1 row, 2 clicks', () => {
   const env = createEnv();
   env.post(base({ event: 'page_view' }));
-  env.post(base({ event: 'buy_click', plan: 'band', button: 'hero' }));
-  env.post(base({ event: 'reserve', email: 'p@x.com', plan: 'band', button: 'hero', baby_stage: 'Expecting', would_buy: 'Yes', updates_opt_in: 'no' }));
-  env.post(base({ event: 'buy_click', email: 'p@x.com', plan: 'plus', price: 328, button: 'nav' }));
+  env.post(base({ event: 'buy_click', plan: 'membership', button: 'hero' }));
+  env.post(base({ event: 'reserve', email: 'p@x.com', plan: 'membership', button: 'hero', baby_stage: 'Expecting', would_buy: 'Yes', pay_preference: 'One-time purchase', max_per_year: '$150 to $199', updates_opt_in: 'no' }));
+  env.post(base({ event: 'buy_click', email: 'p@x.com', plan: 'onetime', price: 328, button: 'nav' }));
   const b = env.table('buyers');
   assert.strictEqual(b.length, 1);
   assert.strictEqual(b[0].buy_clicks, 2);
-  assert.strictEqual(b[0].plan, 'band', 'plan comes from the reserve');
+  assert.strictEqual(b[0].plan, 'membership', 'plan comes from the reserve');
   assert.strictEqual(b[0].baby_stage, 'Expecting');
   assert.strictEqual(b[0].updates_opt_in, 'no');
+  assert.strictEqual(b[0].pay_preference, 'One-time purchase');
+  assert.strictEqual(b[0].max_per_year, '$150 to $199');
 });
 
 t('clicks from a second device are added once that device reserves with the same email', () => {
   const env = createEnv();
   const A = 'v_aaaaaaaaaaaaaaaaaaaaaaaa', B = 'v_bbbbbbbbbbbbbbbbbbbbbbbb', C = 'v_cccccccccccccccccccccccc';
-  env.post(base({ event: 'buy_click', visitor_id: A, plan: 'band' }));
-  env.post(base({ event: 'reserve', visitor_id: A, email: 'm@x.com', plan: 'band' }));
-  env.post(base({ event: 'buy_click', visitor_id: B, plan: 'plus' }));
-  env.post(base({ event: 'buy_click', visitor_id: B, plan: 'plus' }));
-  env.post(base({ event: 'buy_click', visitor_id: C, plan: 'plus' })); // someone else
-  env.post(base({ event: 'reserve', visitor_id: B, email: 'M@x.com', plan: 'plus', wanted_feature: 'Heart rate' }));
+  env.post(base({ event: 'buy_click', visitor_id: A, plan: 'membership' }));
+  env.post(base({ event: 'reserve', visitor_id: A, email: 'm@x.com', plan: 'membership' }));
+  env.post(base({ event: 'buy_click', visitor_id: B, plan: 'onetime' }));
+  env.post(base({ event: 'buy_click', visitor_id: B, plan: 'onetime' }));
+  env.post(base({ event: 'buy_click', visitor_id: C, plan: 'onetime' })); // someone else
+  env.post(base({ event: 'reserve', visitor_id: B, email: 'M@x.com', plan: 'onetime', wanted_feature: 'Heart rate' }));
   const b = env.table('buyers');
   assert.strictEqual(b.length, 1, 'still one row per email');
   assert.strictEqual(b[0].buy_clicks, 3);
-  assert.strictEqual(b[0].plan, 'plus');
+  assert.strictEqual(b[0].plan, 'onetime');
   assert.strictEqual(b[0].wanted_feature, 'Heart rate');
   assert.ok(String(b[0].visitor_ids).includes(A) && String(b[0].visitor_ids).includes(B) && !String(b[0].visitor_ids).includes(C));
 });
 
 t('a buy_click with an unknown email still creates the row (e.g. reserve lost)', () => {
   const env = createEnv();
-  env.post(base({ event: 'buy_click', email: 'late@x.com', plan: 'band', button: 'nav', utm_source: 'tiktok' }));
+  env.post(base({ event: 'buy_click', email: 'late@x.com', plan: 'membership', button: 'nav', utm_source: 'tiktok' }));
   const b = env.table('buyers');
   assert.strictEqual(b.length, 1);
   assert.strictEqual(b[0].buy_clicks, 1);
@@ -96,9 +98,9 @@ t('a buy_click with an unknown email still creates the row (e.g. reserve lost)',
 
 t('emails starting with + survive the escape round trip', () => {
   const env = createEnv();
-  env.post(base({ event: 'buy_click', plan: 'band' }));
-  env.post(base({ event: 'reserve', email: '+tag@x.com', plan: 'band' }));
-  env.post(base({ event: 'buy_click', email: '+tag@x.com', plan: 'band' }));
+  env.post(base({ event: 'buy_click', plan: 'membership' }));
+  env.post(base({ event: 'reserve', email: '+tag@x.com', plan: 'membership' }));
+  env.post(base({ event: 'buy_click', email: '+tag@x.com', plan: 'membership' }));
   const b = env.table('buyers');
   assert.strictEqual(b.length, 1);
   assert.strictEqual(b[0].buy_clicks, 2);
@@ -117,9 +119,9 @@ t('adds missing header columns to an older sheet', () => {
 
 t('count endpoint returns the public totals only', () => {
   const env = createEnv();
-  env.post(base({ event: 'buy_click', plan: 'band' }));
-  env.post(base({ event: 'buy_click', plan: 'band' }));
-  env.post(base({ event: 'buy_click', visitor_id: 'v_bbbbbbbbbbbbbbbbbbbbbbbb', plan: 'band' }));
+  env.post(base({ event: 'buy_click', plan: 'membership' }));
+  env.post(base({ event: 'buy_click', plan: 'membership' }));
+  env.post(base({ event: 'buy_click', visitor_id: 'v_bbbbbbbbbbbbbbbbbbbbbbbb', plan: 'membership' }));
   env.post(base({ event: 'reserve', email: 'q@x.com' }));
   assert.deepStrictEqual(env.get({ action: 'count' }), { buyClicks: 3, uniqueBuyers: 2, buyersWithEmail: 1 });
 });

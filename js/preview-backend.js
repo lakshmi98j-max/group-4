@@ -56,7 +56,7 @@
     if (!row) {
       row = {
         email: email, first_click: "", latest_click: "", buy_clicks: 0, plan: "", price_shown: "",
-        baby_stage: "", wanted_feature: "", would_buy: "", updates_opt_in: "",
+        baby_stage: "", wanted_feature: "", would_buy: "", pay_preference: "", max_per_year: "", updates_opt_in: "",
         utm_source: "", utm_campaign: "", device: "", reserved_at: "", visitor_ids: ""
       };
       buyers.push(row);
@@ -70,7 +70,7 @@
     if (evt.event === "reserve") {
       row.plan = evt.plan || row.plan;
       row.price_shown = evt.price !== "" && evt.price !== undefined ? evt.price : row.price_shown;
-      ["baby_stage", "wanted_feature", "would_buy"].forEach(function (f) {
+      ["baby_stage", "wanted_feature", "would_buy", "pay_preference", "max_per_year"].forEach(function (f) {
         if (evt[f]) row[f] = evt[f];
       });
       row.updates_opt_in = evt.updates_opt_in || row.updates_opt_in;

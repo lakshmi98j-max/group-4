@@ -25,13 +25,13 @@ var EVENT_FIELDS = [
   'server_ts', 'event', 'client_ts', 'event_id', 'visitor_id', 'session_id', 'email',
   'plan', 'price', 'price_variant', 'button', 'utm_source', 'utm_medium', 'utm_campaign',
   'referrer', 'device', 'page_path', 'baby_stage', 'wanted_feature', 'would_buy',
-  'updates_opt_in'
+  'pay_preference', 'max_per_year', 'updates_opt_in'
 ];
 
 var BUYER_FIELDS = [
   'email', 'first_click', 'latest_click', 'buy_clicks', 'plan', 'price_shown', 'baby_stage',
-  'wanted_feature', 'would_buy', 'updates_opt_in', 'utm_source', 'utm_campaign', 'device',
-  'reserved_at', 'visitor_ids'
+  'wanted_feature', 'would_buy', 'pay_preference', 'max_per_year', 'updates_opt_in',
+  'utm_source', 'utm_campaign', 'device', 'reserved_at', 'visitor_ids'
 ];
 
 var ALLOWED_EVENTS = {
@@ -313,6 +313,8 @@ function upsertBuyer_(events, buyers, evt) {
     if (evt.baby_stage) row.baby_stage = evt.baby_stage;
     if (evt.wanted_feature) row.wanted_feature = evt.wanted_feature;
     if (evt.would_buy) row.would_buy = evt.would_buy;
+    if (evt.pay_preference) row.pay_preference = evt.pay_preference;
+    if (evt.max_per_year) row.max_per_year = evt.max_per_year;
     if (evt.updates_opt_in) row.updates_opt_in = evt.updates_opt_in;
     if (evt.utm_source) row.utm_source = evt.utm_source;
     if (evt.utm_campaign) row.utm_campaign = evt.utm_campaign;
