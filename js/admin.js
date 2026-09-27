@@ -9,7 +9,7 @@
   "use strict";
 
   var CFG = window.SITE_CONFIG || {};
-  var BRAND = (window.Brand && window.Brand.name) || CFG.BRAND || "Wren";
+  var BRAND = (window.Brand && window.Brand.name) || CFG.BRAND || "Dawn";
   var ENDPOINT = String(CFG.APPS_SCRIPT_URL || "").trim();
   var PREVIEW = !/^https:\/\//i.test(ENDPOINT);
   var KEY_STORE = "fd_admin_key";
@@ -65,10 +65,15 @@
       " " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
   }
   function planLabel(p) {
-    if (p === "plus") return BRAND + " Band + Plus";
-    if (p === "band") return BRAND + " Band";
+    if (p === "membership") return BRAND + " Membership (yearly)";
+    if (p === "onetime") return BRAND + " Band (one-time)";
     return p || "(unknown)";
   }
+
+  // Answer options in their natural order (used to order survey charts).
+  var MAX_PER_YEAR_ORDER = ["Less than $100", "$100 to $149", "$150 to $199", "$200 to $249", "$250 or more"];
+  var WTP_YES = { "$200 to $249": true, "$250 or more": true };
+  var TEST = CFG.TEST_CARD || {};
 
   /* Wilson score interval for k successes out of n, 95% by default. */
   function wilson(k, n, z) {
@@ -461,16 +466,19 @@
     { key: "email", label: "Email" },
     { key: "buy_clicks", label: "Clicks", num: true },
     { key: "plan", label: "Plan", fmt: planLabel },
-    { key: "price_shown", label: "Price", num: true, fmt: fmtMoney },
+    { key: "price_shown", label: "Price", num: true, fmt: function (v, r) { return fmtMoney(v) + (r && r.plan === "membership" && fmtMoney(v) ? "/yr" : ""); } },
     { key: "first_click", label: "First click", fmt: fmtDate, time: true },
     { key: "utm_source", label: "Source", fmt: function (v) { return v || "(no UTM)"; } },
     { key: "baby_stage", label: "Baby stage" },
     { key: "wanted_feature", label: "Most wanted feature", wrap: true },
     { key: "would_buy", label: "Would buy at price", wrap: true },
+    { key: "pay_preference", label: "Rather pay" },
+    { key: "max_per_year", label: "Most per year" },
     { key: "updates_opt_in", label: "Updates opt-in" }
   ];
   var CSV_FIELDS = ["email", "buy_clicks", "plan", "price_shown", "first_click", "latest_click", "reserved_at",
-    "utm_source", "utm_campaign", "device", "baby_stage", "wanted_feature", "would_buy", "updates_opt_in"];
+    "utm_source", "utm_campaign", "device", "baby_stage", "wanted_feature", "would_buy", "pay_preference",
+    "max_per_year", "updates_opt_in"];
 
   function buyerRowsForTable() {
     var q = state.search.trim().toLowerCase();
@@ -526,7 +534,7 @@
       var tr = make("tr");
       COLUMNS.forEach(function (c) {
         var v = r[c.key];
-        var shown = c.fmt ? c.fmt(v) : (v === undefined || v === null ? "" : v);
+        var shown = c.fmt ? c.fmt(v, r) : (v === undefined || v === null ? "" : v);
         var td = make("td", (c.num ? "num" : "") + (c.wrap ? " wrap" : ""), c.key === "buy_clicks" ? fmtInt(v) : shown);
         tr.appendChild(td);
       });
@@ -566,6 +574,144 @@
       URL.revokeObjectURL(a.href);
       a.parentNode.removeChild(a);
     }, 0);
+  }
+
+  /* ---------- Rendering: membership vs one-time ---------- */
+
+  // Unique visitors who clicked each plan, from a list of buy_click events.
+  function planSplit(clickEvents) {
+    var m = uniq(clickEvents.filter(function (e) { return e.plan === "membership"; }), "visitor_id");
+    var o = uniq(clickEvents.filter(function (e) { return e.plan === "onetime"; }), "visitor_id");
+    return { membership: size(m), onetime: size(o) };
+  }
+
+  function splitRow(label, a, b, unit) {
+    var total = a + b;
+    var row = make("div", "split-row");
+    row.appendChild(make("div", "split-row__label", label));
+    var bar = make("div", "split-row__bar");
+    if (a) { var s1 = make("span", "seg-1"); s1.style.flex = String(a); bar.appendChild(s1); }
+    if (b) { var s2 = make("span", "seg-2"); s2.style.flex = String(b); bar.appendChild(s2); }
+    row.appendChild(bar);
+    var txt = make("p", "split-row__text");
+    txt.appendChild(make("b", null, "Membership " + fmtPct(total ? a / total : NaN, 0)));
+    txt.appendChild(document.createTextNode(" · one-time " + fmtPct(total ? b / total : NaN, 0) +
+      " · " + fmtInt(a) + " vs " + fmtInt(b) + " " + unit));
+    row.appendChild(txt);
+    return row;
+  }
+
+  function legendTwo() {
+    var lg = make("div", "legend");
+    [["key-1", "Membership (yearly)"], ["key-2", "One-time"]].forEach(function (k) {
+      var item = make("span");
+      item.appendChild(make("i", k[0]));
+      item.appendChild(document.createTextNode(k[1]));
+      lg.appendChild(item);
+    });
+    return lg;
+  }
+
+  function renderChoice(host, events) {
+    clear(host);
+    var pricingClicks = events.filter(function (e) { return e.event === "buy_click" && e.button === "pricing"; });
+    if (!pricingClicks.length) {
+      host.appendChild(make("p", "empty", "No Buy clicks in the pricing section yet for this date range."));
+      return;
+    }
+    host.appendChild(legendTwo());
+    var list = make("div", "splits");
+    var prices = {};
+    pricingClicks.forEach(function (e) { var v = Number(e.price_variant); if (v) prices[v] = true; });
+    Object.keys(prices).map(Number).sort(function (a, b) { return a - b; }).forEach(function (p) {
+      var sp = planSplit(pricingClicks.filter(function (e) { return Number(e.price_variant) === p; }));
+      list.appendChild(splitRow(fmtMoney(p) + "/yr", sp.membership, sp.onetime, "visitors"));
+    });
+    var all = planSplit(pricingClicks);
+    list.appendChild(splitRow("All", all.membership, all.onetime, "visitors"));
+    host.appendChild(list);
+  }
+
+  /* ---------- Rendering: test card ---------- */
+
+  // Reserved the membership at $200/yr (or the threshold) without saying the price was too
+  // high, or answered that they would pay $200+ a year.
+  function reservedAtPrice(b) {
+    var threshold = Number(TEST.wtpThreshold) || 199;
+    var doubts = b.would_buy === "Maybe at a lower price" || b.would_buy === "No, just curious";
+    return b.plan === "membership" && Number(b.price_shown) >= threshold && !doubts;
+  }
+  function agreesToWtp(b) {
+    return reservedAtPrice(b) || !!WTP_YES[b.max_per_year];
+  }
+
+  function setMeter(id, value, target) {
+    var pct = target ? Math.min(1, value / target) : 0;
+    $(id).style.width = (pct * 100).toFixed(1) + "%";
+  }
+
+  function renderTestCard() {
+    var target = Number(TEST.targetCustomers) || 50;
+    var threshold = Number(TEST.wtpThreshold) || 199;
+    var buyers = state.buyers;
+    var agree = buyers.filter(agreesToWtp);
+    var byPrice = buyers.filter(reservedAtPrice).length;
+    var bySurvey = buyers.filter(function (b) { return !!WTP_YES[b.max_per_year]; }).length;
+
+    $("tc-name").textContent = TEST.name || "Business model + WTP";
+    $("tc-hyp").textContent = TEST.hypothesis || "Parents will pay $200/year for the base model.";
+
+    var meta = [];
+    if (TEST.assignedTo) meta.push(TEST.assignedTo);
+    var deadline = Date.parse((TEST.deadline || "") + "T23:59:59");
+    if (!isNaN(deadline)) {
+      var daysLeft = Math.ceil((deadline - Date.now()) / DAY);
+      var dl = new Date(deadline).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      meta.push("Deadline " + dl + (daysLeft >= 0 ? " · " + daysLeft + " day" + (daysLeft === 1 ? "" : "s") + " left" : " · ended"));
+    }
+    $("tc-meta").textContent = meta.join(" · ");
+
+    $("tc-agree").textContent = fmtInt(agree.length) + " of " + fmtInt(target);
+    setMeter("tc-agree-bar", agree.length, target);
+    $("tc-agree-detail").textContent = buyers.length
+      ? fmtPct(agree.length / buyers.length, 0) + " of " + fmtInt(buyers.length) + " reservations. " +
+        fmtInt(byPrice) + " reserved the membership at " + fmtMoney(threshold) + "/yr or more (not answering \"lower price\" or \"just curious\"); " +
+        fmtInt(bySurvey) + " said they'd pay $200+ a year."
+      : "No reservations yet.";
+
+    $("tc-customers").textContent = fmtInt(buyers.length) + " of " + fmtInt(target);
+    setMeter("tc-customers-bar", buyers.length, target);
+    $("tc-customers-detail").textContent = "Emails on the list (one per person).";
+
+    var pref = $("tc-pref");
+    clear(pref);
+    var pricingClicks = state.events.filter(function (e) { return e.event === "buy_click" && e.button === "pricing"; });
+    var sp = planSplit(pricingClicks);
+    var said = { m: 0, o: 0, n: 0 };
+    buyers.forEach(function (b) {
+      if (b.pay_preference === "Yearly membership") said.m++;
+      else if (b.pay_preference === "One-time purchase") said.o++;
+      else if (b.pay_preference === "Not sure yet") said.n++;
+    });
+    if (!sp.membership && !sp.onetime && !said.m && !said.o) {
+      pref.appendChild(make("p", "empty", "No pricing clicks or answers yet."));
+    } else {
+      pref.appendChild(legendTwo());
+      var list = make("div", "splits");
+      list.appendChild(splitRow("Clicked", sp.membership, sp.onetime, "visitors"));
+      list.appendChild(splitRow("Said", said.m, said.o, "people" + (said.n ? " (" + fmtInt(said.n) + " not sure)" : "")));
+      pref.appendChild(list);
+    }
+
+    var status = $("tc-status");
+    clear(status);
+    if (agree.length >= target) {
+      status.appendChild(make("span", "ok", "Criteria met. "));
+      status.appendChild(document.createTextNode(fmtInt(agree.length) + " parents agreed to pay $200+ a year (target " + fmtInt(target) + ")."));
+    } else {
+      status.textContent = "Not met yet: " + fmtInt(agree.length) + " of " + fmtInt(target) +
+        " parents have agreed to pay $200+ a year. We are right if parents agree to pay at least $200/year.";
+    }
   }
 
   /* ---------- Main render ---------- */
@@ -622,22 +768,38 @@
     renderBars($("c-funnel"), nVisitors ? steps : [], { cls: "funnel", empty: "No visits recorded in this date range yet." });
 
     renderPrices($("c-price"), events);
+    renderChoice($("c-choice"), events);
 
     renderBars($("c-plan"), countBy(clicks, function (e) { return planLabel(e.plan); }));
     renderBars($("c-button"), countBy(clicks, function (e) { return e.button || "(unknown)"; }));
     renderBars($("c-source"), foldTail(countBy(clicks, function (e) { return e.utm_source || "(no UTM)"; }), 8));
     renderBars($("c-device"), countBy(clicks, function (e) { return e.device || "(unknown)"; }));
 
-    function survey(field) {
+    function survey(field, order) {
       var answered = buyers.filter(function (b) { return b[field]; }).length;
-      var rows = foldTail(countBy(buyers, function (b) { return b[field]; }), 8);
+      var rows = countBy(buyers, function (b) { return b[field]; });
+      if (order) {
+        rows.sort(function (a, b) {
+          var ia = order.indexOf(a.label), ib = order.indexOf(b.label);
+          return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+        });
+      } else {
+        rows = foldTail(rows, 8);
+      }
       return { rows: rows, note: buyers.length ? fmtInt(answered) + " of " + fmtInt(buyers.length) + " answered." : "" };
     }
-    ["baby_stage", "wanted_feature", "would_buy"].forEach(function (f, i) {
-      var host = $(["c-stage", "c-feature", "c-would"][i]);
-      var s = survey(f);
-      renderBars(host, s.rows, { note: s.rows.length ? s.note : "", empty: "No answers yet." });
+    [
+      ["baby_stage", "c-stage"],
+      ["wanted_feature", "c-feature"],
+      ["would_buy", "c-would", ["Yes", "Maybe at a lower price", "No, just curious"]],
+      ["pay_preference", "c-paypref", ["Yearly membership", "One-time purchase", "Not sure yet"]],
+      ["max_per_year", "c-max", MAX_PER_YEAR_ORDER]
+    ].forEach(function (q) {
+      var s = survey(q[0], q[2]);
+      renderBars($(q[1]), s.rows, { note: s.rows.length ? s.note : "", empty: "No answers yet." });
     });
+
+    renderTestCard();
 
     renderBuyersTable();
 
