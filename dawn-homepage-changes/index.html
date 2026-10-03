@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dawn · A sleep tracker for your baby</title>
+  <meta name="description" content="A soft band on your baby's chest tracks their sleep and vitals all night, and tells you when they need you.">
+  <meta name="theme-color" content="#f8f4ee">
+  <meta property="og:title" content="Dawn · A sleep tracker for your baby">
+  <meta property="og:description" content="Know they're okay, without getting up. One light: green, yellow or red.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f8f4ee'/%3E%3Cpath d='M7 21a9 9 0 0 1 18 0z' fill='%23e4a064'/%3E%3Crect x='4' y='22.5' width='24' height='2.4' rx='1.2' fill='%232b3940'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/lora-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="config.js" defer></script>
+  <script src="js/brand.js" defer></script>
+  <script src="js/preview-backend.js" defer></script>
+  <script src="js/track.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Icon sprite -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-breath" viewBox="0 0 24 24"><path d="M3 8h9a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h6"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/><path d="M7.5 12.2h2.4l1.3-2.3 1.9 4.3 1.3-2h2.1"/></symbol>
+      <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.3 6 11a6 6 0 0 1-12 0c0-4.7 6-11 6-11z"/><circle cx="12" cy="14.5" r="2.2"/></symbol>
+      <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0v8.8a4 4 0 1 1-4 0z"/><path d="M12 10v6"/></symbol>
+      <symbol id="i-position" viewBox="0 0 24 24"><path d="M19.6 13.2a7.8 7.8 0 1 1-2.2-6.9"/><path d="M19.8 3.8v4.2h-4.2"/><rect x="9.2" y="9.2" width="5.6" height="5.6" rx="2"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.6A7.9 7.9 0 1 1 9.4 4.5a6.4 6.4 0 0 0 10.1 10.1z"/></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></symbol>
+      <symbol id="i-room" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M12 11.5s2.6 2.7 2.6 4.5a2.6 2.6 0 0 1-5.2 0c0-1.8 2.6-4.5 2.6-4.5z"/></symbol>
+      <symbol id="i-log" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="16.5" rx="2.2"/><path d="M9 4.5V3h6v1.5"/><path d="M9 10h6M9 13.5h6M9 17h3.5"/></symbol>
+      <symbol id="i-band" viewBox="0 0 24 24"><rect x="2.5" y="9" width="19" height="7" rx="3.5"/><path d="M9 7.5a3 3 0 0 1 6 0v9a3 3 0 0 1-6 0z"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2.6"/><path d="M11 18h2"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13.2 14-14 0 9-5 14-13.2 14z"/><path d="M5 19l7.5-7.5"/></symbol>
+      <symbol id="i-wash" viewBox="0 0 24 24"><path d="M3.5 7.5L5.5 19h13l2-11.5"/><path d="M3.5 7.5c2.1 1.5 4.3 1.5 6.4 0s4.2-1.5 6.3 0 3.3 1.3 4.3 0"/></symbol>
+      <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7.5" width="16" height="9" rx="2.2"/><path d="M21 10.5v3"/><path d="M6.5 10.5v3M9.5 10.5v3M12.5 10.5v3"/></symbol>
+      <symbol id="i-feather" viewBox="0 0 24 24"><path d="M20 4c-8 0-13 5-13 12v4"/><path d="M20 4c0 7-4 12-11 12"/><path d="M7 16l6-6"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></symbol>
+      <symbol id="i-people" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19c.6-3.4 2.8-5.5 5.5-5.5S13.4 15.6 14 19"/><path d="M14.5 14.2c.6-.4 1.3-.7 2-.7 2.3 0 4 1.8 4.5 4.5"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+      <symbol id="i-report" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 15.5h5M10 18.5h3"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5.5c0 4.5-3 7.8-7 9.5-4-1.7-7-5-7-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2.2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/><path d="M9 14.5l2 2 4-4"/></symbol>
+    </defs>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <p class="announce"><span class="announce__dot" aria-hidden="true"></span>Pre-orders are open. Nothing is charged today.</p>
+
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a class="logo" href="#top" aria-label="Dawn home">
+        <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M7 21a9 9 0 0 1 18 0z" class="logo__sun"/>
+          <path d="M16 6.5v3M8.2 9.7l2 2M23.8 9.7l-2 2" class="logo__rays"/>
+          <rect x="4" y="22.5" width="24" height="2.4" rx="1.2" class="logo__line"/>
+        </svg>
+        <span class="logo__word">Dawn</span>
+      </a>
+      <div class="nav__actions">
+        <button class="btn btn--primary btn--sm" type="button" data-buy data-plan="membership" data-button="nav">Pre-order now</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow">A sleep tracker for your baby</p>
+          <h1 id="hero-title" class="display">Know they're okay. <em>Without getting up.</em></h1>
+          <p class="lede">A soft band on your baby's chest tracks their sleep and vitals all night, and tells you when they need you.</p>
+
+          <ul class="chips" id="tracks" aria-label="What Dawn tracks">
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>Breathing</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>Heart rate</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>Oxygen</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>Sleep</li>
+          </ul>
+
+          <div class="hero__buy" data-hero-cta>
+            <button class="btn btn--sun btn--xl" type="button" data-buy data-plan="membership" data-button="hero">Pre-order now<svg class="icon btn__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+
+        <!-- HERO IMAGE: replace this block with Keshav's photo of a baby wearing Dawn -->
+        <div class="hero__visual">
+          <div class="sunrise" aria-hidden="true"></div>
+          <svg class="band-art" viewBox="0 0 440 300" role="img" aria-labelledby="band-art-title">
+            <title id="band-art-title">The Dawn band: a soft fabric strap with a small, rounded sage-green sensor pod that glows with one status light.</title>
+            <defs>
+              <linearGradient id="strap" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#efe6d8"/>
+                <stop offset="1" stop-color="#d8cbb6"/>
+              </linearGradient>
+              <linearGradient id="strap-end" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#b9ab94"/>
+                <stop offset="1" stop-color="#d9ccb7"/>
+              </linearGradient>
+              <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse">
+                <path d="M0 2.5h5M2.5 0v5" stroke="#a8977c" stroke-opacity=".18" stroke-width="1"/>
+              </pattern>
+              <linearGradient id="pod-body" x1="130" y1="70" x2="300" y2="250" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#bcd2b9"/>
+                <stop offset=".5" stop-color="#9dbb9b"/>
+                <stop offset="1" stop-color="#7c9c7c"/>
+              </linearGradient>
+              <radialGradient id="pod-shine" cx="180" cy="120" r="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#fff" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="led-glow" cx=".5" cy=".5" r=".5">
+                <stop offset="0" stop-color="currentColor" stop-opacity=".9"/>
+                <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="150%">
+                <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#5b4a33" flood-opacity=".18"/>
+              </filter>
+            </defs>
+            <ellipse cx="220" cy="262" rx="140" ry="8" fill="#6f5a3e" opacity=".1"/>
+            <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#strap)"/>
+            <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#weave)"/>
+            <ellipse cx="38" cy="159" rx="15" ry="39" fill="url(#strap-end)"/>
+            <path d="M52 128 Q220 102 330 116" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
+            <path d="M52 190 Q220 216 330 202" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
+            <rect x="322" y="108" width="98" height="100" rx="14" fill="#e6dccb"/>
+            <rect x="322" y="108" width="98" height="100" rx="14" fill="url(#weave)"/>
+            <rect x="331" y="117" width="80" height="82" rx="9" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".8"/>
+            <g class="pod" filter="url(#soft-shadow)">
+              <circle cx="152" cy="92" r="24" fill="url(#pod-body)"/>
+              <circle cx="258" cy="92" r="24" fill="url(#pod-body)"/>
+              <rect x="126" y="80" width="158" height="152" rx="66" fill="url(#pod-body)"/>
+              <rect x="126" y="80" width="158" height="152" rx="66" fill="url(#pod-shine)"/>
+            </g>
+            <g class="pod-led" data-led>
+              <circle cx="205" cy="160" r="24" fill="url(#led-glow)" class="pod-led__glow"/>
+              <rect x="202.5" y="148" width="5" height="24" rx="2.5" class="pod-led__bar"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. One light -->
+    <section class="section cream" id="light" aria-labelledby="light-title">
+      <div class="wrap lights">
+        <h2 id="light-title" class="lights__title">Three lights. Instant relief.</h2>
+        <p class="lights__lede">One glance at the band or your phone tells you how your baby is doing. No guessing, no 3 a.m. searching.</p>
+        <ul class="lights__list">
+          <li class="light light--green">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Green</p>
+            <p>All good. Go back to sleep.</p>
+          </li>
+          <li class="light light--yellow">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Yellow</p>
+            <p>They need you. A feed, a change or a cuddle.</p>
+          </li>
+          <li class="light light--red">
+            <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
+            <p class="light__name">Red</p>
+            <p>Call your doctor. Your phone shows why.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. What it does for you -->
+    <section class="section paper" id="benefits" aria-labelledby="benefits-title">
+      <div class="wrap">
+        <h2 id="benefits-title" class="lights__title">Rest easier, starting tonight.</h2>
+        <ul class="benefits">
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>
+            <h3>Watches all night</h3>
+            <p>Breathing, heart rate, oxygen and sleep, checked every few seconds.</p>
+          </li>
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-spark"/></svg>
+            <h3>Learns your baby</h3>
+            <p>After a few weeks it knows what's normal for them, not for a chart.</p>
+          </li>
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+            <h3>Speaks up when it matters</h3>
+            <p>No constant pings. Your phone only buzzes when something changes.</p>
+          </li>
+        </ul>
+        <ul class="facts-row" aria-label="Quick facts">
+          <li>18 g pod</li>
+          <li>5-day battery</li>
+          <li>Washable cotton band</li>
+          <li>Your data is never sold</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. A parent's voice -->
+    <section class="section slate" id="voice" aria-label="What a parent told us">
+      <div class="wrap wrap--narrow">
+        <figure class="voice">
+          <blockquote><p>"I'd want a triage answer at 3 a.m. that isn't just 'consult your pediatrician.'"</p></blockquote>
+          <figcaption>Aman Rai, New Parent</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 5. Two quick answers -->
+    <section class="section cream" id="faq" aria-labelledby="faq-title">
+      <div class="wrap wrap--narrow">
+        <h2 id="faq-title" class="lights__title">Quick answers</h2>
+        <div class="faq">
+          <details>
+            <summary>When does it ship?</summary>
+            <div class="faq__body">
+              <p>We're still building it. Pre-order and you'll be first to hear when it's ready. Nothing is charged today.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Is it a medical device?</summary>
+            <div class="faq__body">
+              <p>No. Dawn doesn't diagnose anything and doesn't replace your pediatrician or safe sleep: baby on their back, on a firm, flat surface, nothing else in the crib.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Is it safe for my baby?</summary>
+            <div class="faq__body">
+              <p>Dawn is designed to be gentle. The band is soft organic cotton with no wires in the fabric, and the 18 g pod has a smooth, rounded silicone shell, so nothing hard presses on your baby's skin. It uses low-energy Bluetooth to talk to the dock.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Has it been tested?</summary>
+            <div class="faq__body">
+              <p>Not yet. Dawn is still a prototype. Before it ships, it has to pass independent safety testing for baby products, and we'll share the results here. Until then, nothing is sold or charged.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating pre-order button: appears once the hero button scrolls out of view -->
+  <div class="sticky-cta" data-sticky-cta aria-hidden="true">
+    <div class="sticky-cta__bar">
+      <p class="sticky-cta__text"><b>Dawn</b><span>Nothing charged today</span></p>
+      <button class="btn btn--sun" type="button" data-buy data-plan="membership" data-button="sticky" tabindex="-1">Pre-order now<svg class="icon btn__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <a class="logo logo--footer" href="#top" aria-label="Dawn, back to top">
+        <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M7 21a9 9 0 0 1 18 0z" class="logo__sun"/>
+          <path d="M16 6.5v3M8.2 9.7l2 2M23.8 9.7l-2 2" class="logo__rays"/>
+          <rect x="4" y="22.5" width="24" height="2.4" rx="1.2" class="logo__line"/>
+        </svg>
+        <span class="logo__word">Dawn</span>
+      </a>
+      <p class="footer__tag">Peace of mind, for beautiful babies and their beautiful mothers.</p>
+      <p class="footer__disclaimer">Concept product in development. Not a medical device. Not intended to diagnose, treat, cure, or prevent any disease.</p>
+      <p class="footer__links"><a href="privacy.html">Privacy</a><span aria-hidden="true">·</span><span>© <span data-year>2026</span> Dawn</span></p>
+    </div>
+  </footer>
+
+  <!-- Reserve modal -->
+  <dialog class="modal" id="reserve" aria-labelledby="reserve-title">
+    <div class="modal__box">
+      <button class="modal__close" type="button" data-close aria-label="Close">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+      </button>
+
+      <!-- View: form -->
+      <div class="modal__view" data-view="form">
+        <h2 id="reserve-title" class="modal__title">Pre-order Dawn</h2>
+        <p class="modal__price"><span data-modal-price></span></p>
+        <p class="modal__text">Band, sensor and app included. Nothing is charged today. Leave your email to hold your spot at this price.</p>
+
+        <form class="reserve-form" novalidate>
+          <div class="field">
+            <label for="r-email">Email</label>
+            <input id="r-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="r-email-error">
+            <p class="field__error" id="r-email-error" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
+          </div>
+
+          <div class="modal__actions">
+            <button class="btn btn--primary btn--block btn--lg" type="submit">Hold my spot</button>
+            <p class="modal__fine">We'll only email you about Dawn. Unsubscribe anytime. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- View: success -->
+      <div class="modal__view" data-view="done" hidden>
+        <div class="modal__sun" aria-hidden="true"></div>
+        <h2 class="modal__title" id="done-title" tabindex="-1">You're on the list!</h2>
+        <p class="modal__text">Dawn isn't on sale yet, and you haven't been charged. We'll email you when pre-orders open.</p>
+        <button class="btn btn--primary btn--block" type="button" data-close>Done</button>
+      </div>
+
+      <!-- View: already on the list -->
+      <div class="modal__view" data-view="already" hidden>
+        <div class="modal__sun" aria-hidden="true"></div>
+        <h2 class="modal__title" id="already-title" tabindex="-1">You're already on the list as <span class="modal__email" data-known-email></span></h2>
+        <p class="modal__text">Dawn isn't on sale yet and nothing has been charged. We'll email you as soon as pre-orders open.</p>
+        <button class="btn btn--primary btn--block" type="button" data-close>Done</button>
+        <button class="linkish" type="button" data-other-email>Use a different email</button>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
