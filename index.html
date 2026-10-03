@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Dawn · Peace of mind, measured in real time</title>
-  <meta name="description" content="Dawn is a soft band with an 18-gram sensor that rests on your baby's chest. Sleep, breathing, heart rate and blood oxygen all night, one calm morning score, and one light that matters.">
+  <title>Dawn · A sleep tracker for your baby</title>
+  <meta name="description" content="A soft band on your baby's chest tracks their sleep and vitals all night, and tells you when they need you.">
   <meta name="theme-color" content="#f8f4ee">
-  <meta property="og:title" content="Dawn · Peace of mind, measured in real time">
-  <meta property="og:description" content="A soft baby band with an 18-gram sensor: four vitals all night, one light that matters, and a 3 a.m. guide that knows what to do.">
+  <meta property="og:title" content="Dawn · A sleep tracker for your baby">
+  <meta property="og:description" content="Know they're okay, without getting up. One light: green, yellow or red.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f8f4ee'/%3E%3Cpath d='M7 21a9 9 0 0 1 18 0z' fill='%23e4a064'/%3E%3Crect x='4' y='22.5' width='24' height='2.4' rx='1.2' fill='%232b3940'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/lora-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -37,6 +37,7 @@
       <symbol id="i-band" viewBox="0 0 24 24"><rect x="2.5" y="9" width="19" height="7" rx="3.5"/><path d="M9 7.5a3 3 0 0 1 6 0v9a3 3 0 0 1-6 0z"/></symbol>
       <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2.6"/><path d="M11 18h2"/></symbol>
       <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5"/></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
       <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
       <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
@@ -56,6 +57,8 @@
 
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <p class="announce"><span class="announce__dot" aria-hidden="true"></span>Pre-orders are open. Nothing is charged today.</p>
+
   <header class="nav" id="top">
     <div class="nav__inner">
       <a class="logo" href="#top" aria-label="Dawn home">
@@ -66,19 +69,8 @@
         </svg>
         <span class="logo__word">Dawn</span>
       </a>
-      <nav class="nav__links" id="nav-links" aria-label="Sections">
-        <a href="#meet">Meet Dawn</a>
-        <a href="#why">Why the chest</a>
-        <a href="#tracks">What it tracks</a>
-        <a href="#app">The app</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-      </nav>
       <div class="nav__actions">
-        <button class="btn btn--primary btn--sm" type="button" data-buy data-plan="membership" data-button="nav">Buy now</button>
-        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
-        </button>
+        <button class="btn btn--primary btn--sm" type="button" data-buy data-plan="membership" data-button="nav">Pre-order now</button>
       </div>
     </div>
   </header>
@@ -88,32 +80,27 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <p class="eyebrow">The smart sleep band for babies</p>
-          <h1 id="hero-title" class="display">Peace of mind, <em>measured in real time.</em></h1>
-          <p class="lede">Dawn is a soft band with an 18-gram sensor that rests on your baby's chest. It watches sleep, breathing, heart rate and blood oxygen all night, learns what's normal for your baby, and tells you what matters with one light: green, yellow or red.</p>
+          <p class="eyebrow">A sleep tracker for your baby</p>
+          <h1 id="hero-title" class="display">Know they're okay. <em>Without getting up.</em></h1>
+          <p class="lede">A soft band on your baby's chest tracks their sleep and vitals all night, and tells you when they need you.</p>
 
-          <div class="hero__buy">
-            <div class="price-tag">
-              <span class="price-tag__amount" data-price="membership"></span>
-              <span class="price-tag__note">per year<br>band included</span>
-            </div>
-            <button class="btn btn--primary btn--lg" type="button" data-buy data-plan="membership" data-button="hero">Buy now</button>
-          </div>
-          <p class="hero__alt">Or <span data-price-label="onetime"></span> once, no membership. <a href="#pricing">Compare plans</a></p>
-
-          <ul class="chips" aria-label="Highlights">
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-feather"/></svg>18 grams</li>
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-battery"/></svg>5-day battery</li>
-            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>Your data, yours</li>
+          <ul class="chips" id="tracks" aria-label="What Dawn tracks">
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>Breathing</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>Heart rate</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>Oxygen</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>Sleep</li>
           </ul>
+
+          <div class="hero__buy" data-hero-cta>
+            <button class="btn btn--sun btn--xl" type="button" data-buy data-plan="membership" data-button="hero">Pre-order now<svg class="icon btn__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+          </div>
         </div>
 
+        <!-- HERO IMAGE: replace this block with Keshav's photo of a baby wearing Dawn -->
         <div class="hero__visual">
           <div class="sunrise" aria-hidden="true"></div>
-
-          <!-- Product: the Dawn band and sensor pod -->
           <svg class="band-art" viewBox="0 0 440 300" role="img" aria-labelledby="band-art-title">
-            <title id="band-art-title">The Dawn band: a soft oatmeal fabric strap with a small, rounded sage-green sensor pod on the front that glows with one status light.</title>
+            <title id="band-art-title">The Dawn band: a soft fabric strap with a small, rounded sage-green sensor pod that glows with one status light.</title>
             <defs>
               <linearGradient id="strap" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#efe6d8"/>
@@ -140,21 +127,18 @@
                 <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
               </radialGradient>
               <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="150%">
-                <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#5b4a33" flood-opacity=".25"/>
+                <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#5b4a33" flood-opacity=".18"/>
               </filter>
             </defs>
-            <ellipse cx="220" cy="272" rx="165" ry="13" fill="#6f5a3e" opacity=".18"/>
-            <!-- strap -->
+            <ellipse cx="220" cy="262" rx="140" ry="8" fill="#6f5a3e" opacity=".1"/>
             <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#strap)"/>
             <path d="M38 120 Q220 92 402 120 L402 198 Q220 226 38 198 Z" fill="url(#weave)"/>
             <ellipse cx="38" cy="159" rx="15" ry="39" fill="url(#strap-end)"/>
             <path d="M52 128 Q220 102 330 116" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
             <path d="M52 190 Q220 216 330 202" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".7"/>
-            <!-- hook-and-loop tab -->
             <rect x="322" y="108" width="98" height="100" rx="14" fill="#e6dccb"/>
             <rect x="322" y="108" width="98" height="100" rx="14" fill="url(#weave)"/>
             <rect x="331" y="117" width="80" height="82" rx="9" fill="none" stroke="#b7a68b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".8"/>
-            <!-- sensor pod: a soft rounded shape with two small ears -->
             <g class="pod" filter="url(#soft-shadow)">
               <circle cx="152" cy="92" r="24" fill="url(#pod-body)"/>
               <circle cx="258" cy="92" r="24" fill="url(#pod-body)"/>
@@ -166,533 +150,116 @@
               <rect x="202.5" y="148" width="5" height="24" rx="2.5" class="pod-led__bar"/>
             </g>
           </svg>
-
-          <!-- Phone mockup of the parent app -->
-          <div class="phone" role="img" aria-label="The Dawn app on a phone, showing live vitals for a sleeping baby: all good, deep sleep for 1 hour 15 minutes, breathing 38 breaths per minute, heart rate 122 bpm, blood oxygen 98 percent, skin temperature 36.6 degrees Celsius, sleeping on their back.">
-            <div class="phone__screen" aria-hidden="true">
-              <div class="app-status"><span>3:12</span><span class="app-status__icons"><i></i><i></i><i></i></span></div>
-              <div class="app-head">
-                <div>
-                  <p class="app-head__name">Leo</p>
-                  <p class="app-head__sub">Live vitals</p>
-                </div>
-                <span class="status-pill"><span class="status-dot"></span>All good</span>
-              </div>
-
-              <div class="app-card app-card--sleep">
-                <span class="app-label"><svg class="icon" focusable="false"><use href="#i-moon"/></svg>Sleep</span>
-                <span class="app-value"><b>Deep sleep</b><small data-live="asleep">1h 15m</small></span>
-              </div>
-
-              <div class="app-card app-card--breath">
-                <div class="app-card__row">
-                  <span class="app-label"><svg class="icon" focusable="false"><use href="#i-breath"/></svg>Breathing</span>
-                  <span class="app-value"><b data-live="breath">38</b><small>breaths/min</small></span>
-                </div>
-                <div class="wave" data-wave>
-                  <svg class="wave__svg" viewBox="0 0 400 60" preserveAspectRatio="none"><path class="wave__path" d=""/></svg>
-                </div>
-              </div>
-
-              <div class="app-grid">
-                <div class="app-card">
-                  <span class="app-label"><svg class="icon icon--beat" focusable="false"><use href="#i-heart"/></svg>Heart rate</span>
-                  <span class="app-value"><b data-live="hr">122</b><small>bpm</small></span>
-                </div>
-                <div class="app-card">
-                  <span class="app-label"><svg class="icon" focusable="false"><use href="#i-drop"/></svg>Oxygen</span>
-                  <span class="app-value"><b data-live="spo2">98</b><small>% SpO<sub>2</sub></small></span>
-                </div>
-                <div class="app-card">
-                  <span class="app-label"><svg class="icon" focusable="false"><use href="#i-thermo"/></svg>Skin temp</span>
-                  <span class="app-value"><b data-temp-c="36.6" data-temp-dec="1">36.6</b><small data-temp-unit>°C</small></span>
-                </div>
-                <div class="app-card">
-                  <span class="app-label"><svg class="icon" focusable="false"><use href="#i-position"/></svg>Position</span>
-                  <span class="app-value app-value--text"><b>On back</b></span>
-                </div>
-              </div>
-              <div class="app-foot">Nursery <span data-temp-c="21" data-temp-dec="1">21.0</span><span data-temp-unit>°C</span> · <span data-live="rh">48</span>% humidity</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. The problem -->
-    <section class="section slate" id="story" aria-labelledby="story-title">
-      <div class="wrap">
-        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">3:47 am</span> Awake, again</p>
-        <h2 id="story-title" class="display display--md">You tiptoe to the crib, just to check they're breathing.</h2>
-        <p class="section-lede">Then again at 4:20. New parents sleep in broken stretches of a few hours, and the worry doesn't switch off. So you buy everything.</p>
-
-        <ul class="tried">
-          <li><b>A pulse oximeter.</b> <span>Numbers, no meaning.</span></li>
-          <li><b>Parenting forums.</b> <span>Horror stories, endless.</span></li>
-          <li><b>Videos.</b> <span>Generic advice. Every baby is different.</span></li>
-          <li><b>AI chatbots.</b> <span>Always "probably fine".</span></li>
-          <li><b>Grandma.</b> <span>All gut, no data.</span></li>
-        </ul>
-
-        <figure class="quotes" aria-labelledby="quotes-title">
-          <figcaption id="quotes-title" class="quotes__title">What parents told us in our interviews</figcaption>
-          <blockquote class="quote"><p>"The oximeter probably caused me more anxiety than it solved."</p></blockquote>
-          <blockquote class="quote"><p>"I'd want a triage answer at 3 a.m. that isn't just 'consult your pediatrician.'"</p></blockquote>
-          <blockquote class="quote"><p>"I wasn't sure whether it was a normal reaction or if we needed to visit the hospital."</p></blockquote>
-        </figure>
-      </div>
-    </section>
-
-    <!-- 3. Meet Dawn -->
-    <section class="section cream" id="meet" aria-labelledby="meet-title">
-      <div class="wrap meet">
-        <div class="meet__copy">
-          <p class="eyebrow">Meet Dawn</p>
-          <h2 id="meet-title" class="display display--md">Four vitals. <em>All night.</em></h2>
-          <p class="section-lede">The kind of data you already track for yourself, made gentle enough for a newborn. Dawn learns your baby's own normal over the first weeks, so it can tell you when something is off for them, not for a chart.</p>
-          <ul class="vitals">
-            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>Sleep</span><span class="vitals__value">9h 20m</span></li>
-            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>Breathing</span><span class="vitals__value">38 <small>breaths/min</small></span></li>
-            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>Heart rate</span><span class="vitals__value">122 <small>bpm</small></span></li>
-            <li><span class="vitals__label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>Blood oxygen</span><span class="vitals__value">98 <small>% SpO<sub>2</sub></small></span></li>
-          </ul>
-          <p class="small-note">Example readings.</p>
-        </div>
-        <div class="meet__facts">
-          <div class="fact"><span class="fact__big">18 g</span><span class="fact__text">Lighter than a AA battery.</span></div>
-          <div class="fact"><span class="fact__big">5 days</span><span class="fact__text">On one charge.</span></div>
-          <div class="fact"><span class="fact__big"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg></span><span class="fact__text"><b>Your data, yours.</b> Encrypted, never sold.</span></div>
-        </div>
-      </div>
-
-      <!-- One light that matters -->
-      <div class="wrap lights" id="light">
-        <h3 class="lights__title">One light that matters.</h3>
-        <p class="lights__lede">No feed to stare at. The pod and the app agree on one simple status.</p>
+    <!-- 2. One light -->
+    <section class="section cream" id="light" aria-labelledby="light-title">
+      <div class="wrap lights">
+        <h2 id="light-title" class="lights__title">Three lights. Instant relief.</h2>
+        <p class="lights__lede">One glance at the band or your phone tells you how your baby is doing. No guessing, no 3 a.m. searching.</p>
         <ul class="lights__list">
           <li class="light light--green">
             <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
             <p class="light__name">Green</p>
-            <p>All within their normal. Sleep on.</p>
+            <p>All good. Go back to sleep.</p>
           </li>
           <li class="light light--yellow">
             <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
             <p class="light__name">Yellow</p>
-            <p>Worth a look. Something is off from their usual, and the app says what.</p>
+            <p>They need you. A feed, a change or a cuddle.</p>
           </li>
           <li class="light light--red">
             <svg class="mini-pod" viewBox="0 0 120 110" aria-hidden="true" focusable="false"><circle cx="30" cy="22" r="14"/><circle cx="90" cy="22" r="14"/><rect x="14" y="14" width="92" height="88" rx="40"/><rect class="mini-pod__led" x="57.5" y="44" width="5" height="22" rx="2.5"/></svg>
             <p class="light__name">Red</p>
-            <p>Check now. Your phone alerts you right away and says why.</p>
+            <p>Call your doctor. Your phone shows why.</p>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- 4. Why the chest -->
-    <section class="section cream-2" id="why" aria-labelledby="why-title">
+    <!-- 3. What it does for you -->
+    <section class="section paper" id="benefits" aria-labelledby="benefits-title">
       <div class="wrap">
-        <p class="eyebrow">Why the chest</p>
-        <h2 id="why-title" class="display display--md">We got this wrong first.</h2>
-        <p class="section-lede">Our first prototype was a band for the wrist and ankle. We moved it to the chest, because that is where breathing actually happens.</p>
-
-        <div class="why-grid">
-          <article class="why-card">
-            <div class="why-card__art" aria-hidden="true">
-              <svg viewBox="0 0 160 90" class="breath-ring">
-                <ellipse class="breath-ring__outer" cx="80" cy="45" rx="62" ry="24"/>
-                <ellipse class="breath-ring__inner" cx="80" cy="45" rx="50" ry="17"/>
-                <rect x="66" y="56" width="28" height="18" rx="9" class="breath-ring__pod"/>
-              </svg>
-              <span class="breath-label"><span>Inhale</span><span>Exhale</span></span>
-            </div>
-            <h3>Breathing, measured where it happens</h3>
-            <p>Each breath lifts the chest and gently stretches the band. The pod's motion sensor follows that rise and fall, so breathing rate is read breath by breath, not guessed from a foot or a wrist.</p>
-          </article>
-          <article class="why-card">
-            <div class="why-card__art" aria-hidden="true">
-              <svg viewBox="0 0 160 90" class="night-art">
-                <path d="M10 70 Q 45 30 80 44 T 150 36" class="night-art__line"/>
-                <circle cx="118" cy="26" r="13" class="night-art__moon"/>
-                <circle cx="124" cy="22" r="11" class="night-art__cut"/>
-              </svg>
-            </div>
-            <h3>Stays on through the night</h3>
-            <p>A soft stretch band with a wide hook-and-loop tab and nothing to wriggle out of. The pod sits flat against the chest, so it stays in place through kicks, wriggles and night feeds.</p>
-          </article>
-          <article class="why-card">
-            <div class="why-card__art" aria-hidden="true">
-              <svg viewBox="0 0 160 90" class="pos-art">
-                <g class="pos-art__item"><rect x="14" y="30" width="34" height="34" rx="12"/><text x="31" y="84">back</text></g>
-                <g class="pos-art__item"><rect x="63" y="30" width="34" height="34" rx="12" transform="rotate(90 80 47)"/><text x="80" y="84">side</text></g>
-                <g class="pos-art__item pos-art__item--alert"><rect x="112" y="30" width="34" height="34" rx="12"/><text x="129" y="84">tummy</text></g>
-                <path d="M40 22 q 24 -16 48 0" class="pos-art__arrow"/>
-                <path d="M92 22 q 24 -16 48 0" class="pos-art__arrow"/>
-              </svg>
-            </div>
-            <h3>Senses sleep position</h3>
-            <p>Sitting on the torso, Dawn can tell back from side from tummy, and sends a rollover alert to your phone when your baby turns onto their tummy.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. What it tracks -->
-    <section class="section paper" id="tracks" aria-labelledby="tracks-title">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">What it tracks</p>
-            <h2 id="tracks-title" class="display display--md">Everything you check at 3 a.m., in one place.</h2>
-          </div>
-          <div class="unit-toggle" role="group" aria-label="Temperature unit">
-            <button type="button" data-unit="c" aria-pressed="true">°C</button>
-            <button type="button" data-unit="f" aria-pressed="false">°F</button>
-          </div>
-        </div>
-
-        <ul class="signal-grid">
-          <li class="signal signal--core">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>
-            <h3>Breathing rate</h3>
-            <p class="unit">breaths/min</p>
-            <p>Read from the rise and fall of the chest, breath by breath.</p>
+        <h2 id="benefits-title" class="lights__title">Rest easier, starting tonight.</h2>
+        <ul class="benefits">
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-breath"/></svg>
+            <h3>Watches all night</h3>
+            <p>Breathing, heart rate, oxygen and sleep, checked every few seconds.</p>
           </li>
-          <li class="signal signal--core">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>
-            <h3>Heart rate</h3>
-            <p class="unit">bpm</p>
-            <p>An optical sensor on the skin side of the pod, sampled all night.</p>
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-spark"/></svg>
+            <h3>Learns your baby</h3>
+            <p>After a few weeks it knows what's normal for them, not for a chart.</p>
           </li>
-          <li class="signal signal--core">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg>
-            <h3>Blood oxygen</h3>
-            <p class="unit">SpO<sub>2</sub> %</p>
-            <p>Oxygen saturation and how it trends through the night.</p>
-          </li>
-          <li class="signal signal--core">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
-            <h3>Active vs quiet sleep</h3>
-            <p class="unit">sleep state · h:mm</p>
-            <p>How the night splits between active sleep, quiet sleep and awake.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-thermo"/></svg>
-            <h3>Skin temperature</h3>
-            <p class="unit">°C / °F</p>
-            <p>Running warm after a vaccine? See the trend, not a single guess.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-position"/></svg>
-            <h3>Sleep position</h3>
-            <p class="unit">back · side · tummy</p>
-            <p>Knows which way they are lying, with a rollover alert for tummy sleeping.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg>
-            <h3>Movement &amp; wake windows</h3>
-            <p class="unit">motion · min awake</p>
-            <p>Wriggles, wake-ups and how long it has been since the last sleep.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-sound"/></svg>
-            <h3>Cry &amp; cough detection</h3>
-            <p class="unit">events/night</p>
-            <p>Processed on the pod itself. Audio is never recorded to the cloud or uploaded.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-room"/></svg>
-            <h3>Room temperature &amp; humidity</h3>
-            <p class="unit">°C / °F · % RH</p>
-            <p>The charging dock keeps an eye on the nursery climate.</p>
-          </li>
-          <li class="signal">
-            <svg class="signal__icon" aria-hidden="true" focusable="false"><use href="#i-log"/></svg>
-            <h3>Feeding &amp; diaper log</h3>
-            <p class="unit">time · mL / oz</p>
-            <p>Feeds, wet and dirty diapers in a tap, lined up with the night's sleep.</p>
+          <li class="benefit">
+            <svg class="benefit__icon" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+            <h3>Speaks up when it matters</h3>
+            <p>No constant pings. Your phone only buzzes when something changes.</p>
           </li>
         </ul>
-        <p class="small-note"><span class="core-key" aria-hidden="true"></span>The four core vitals, tracked all night.</p>
+        <ul class="facts-row" aria-label="Quick facts">
+          <li>18 g pod</li>
+          <li>5-day battery</li>
+          <li>Washable cotton band</li>
+          <li>Your data is never sold</li>
+        </ul>
       </div>
     </section>
 
-    <!-- 6. The app -->
-    <section class="section slate" id="app" aria-labelledby="app-title">
-      <div class="wrap">
-        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">3:12 am</span> The app</p>
-        <h2 id="app-title" class="display display--md">Dawn tells you first. <em>Mira knows what to do.</em></h2>
-        <p class="section-lede">One morning score instead of a feed to watch, a heads-up before you'd have noticed, and calm next steps when you're not sure.</p>
-
-        <div class="app-trio">
-          <article class="app-tile">
-            <h3 class="app-tile__title">Your morning score</h3>
-            <div class="score">
-              <svg class="score__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-                <circle cx="60" cy="60" r="50" class="score__track"/>
-                <circle cx="60" cy="60" r="50" class="score__fill" pathLength="100" stroke-dasharray="86 100"/>
-              </svg>
-              <div class="score__text"><span class="score__num">86</span><span class="score__label">Good night</span></div>
-            </div>
-            <p>One number for the whole night: sleep, breathing and heart rate against your baby's own normal.</p>
-          </article>
-
-          <article class="app-tile">
-            <h3 class="app-tile__title">Dawn tells you first</h3>
-            <ul class="notes">
-              <li><span class="notes__time">3:12 AM</span>Awake 40 mins. Still settling.</li>
-              <li><span class="notes__time">4:05 AM</span>Short night. 4.1 hrs total.</li>
-              <li><span class="notes__time">5:20 AM</span>Due a feed. It's been 4 hrs.</li>
-            </ul>
-          </article>
-
-          <article class="app-tile">
-            <h3 class="app-tile__title">Mira, your 3 a.m. guide</h3>
-            <div class="mira">
-              <p class="mira__q">Crying since the last feed and won't settle.</p>
-              <p class="mira__a">Try burping him. Then bicycle kicks. If he's still unsettled after 20 minutes or seems unwell, call your pediatrician. I can share tonight's readings with them.</p>
-            </div>
-            <p class="mira__note">Mira is our AI guide. It gives general guidance and tells you when to call a doctor. It is not medical advice.</p>
-          </article>
-        </div>
-
-        <figure class="dash" aria-labelledby="dash-caption">
-          <div class="dash__top">
-            <span class="example-badge">Example night</span>
-            <span class="dash__date">Illustrative data · 7:40 pm to 6:50 am</span>
-          </div>
-
-          <dl class="dash__stats">
-            <div><dt>Asleep</dt><dd>10h 12m</dd></div>
-            <div><dt>Wake-ups</dt><dd>2</dd></div>
-            <div><dt>Avg breathing</dt><dd>33 <small>breaths/min</small></dd></div>
-            <div><dt>Avg heart rate</dt><dd>115 <small>bpm</small></dd></div>
-            <div><dt>Oxygen range</dt><dd>96-99 <small>%</small></dd></div>
-            <div><dt>Nursery</dt><dd><span data-temp-c="20.5" data-temp-dec="1">20.5</span><small data-temp-unit>°C</small></dd></div>
-          </dl>
-
-          <div class="dash__charts" id="night-charts" aria-hidden="true"></div>
-
-          <figcaption id="dash-caption" class="dash__caption">
-            Example night with made-up data: sleep stages with two wake-ups at about 11:40 pm and 3:05 am (each followed by a feed), breathing between about 29 and 42 breaths per minute, and heart rate between about 105 and 137 bpm, both highest around the wake-ups.
-          </figcaption>
+    <!-- 4. A parent's voice -->
+    <section class="section slate" id="voice" aria-label="What a parent told us">
+      <div class="wrap wrap--narrow">
+        <figure class="voice">
+          <blockquote><p>"I'd want a triage answer at 3 a.m. that isn't just 'consult your pediatrician.'"</p></blockquote>
+          <figcaption>Aman Rai, New Parent</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- 7. The village -->
-    <section class="section cream" id="village" aria-labelledby="village-title">
-      <div class="wrap">
-        <p class="eyebrow">It takes a village</p>
-        <h2 id="village-title" class="display display--md">All at Dawn.</h2>
-        <p class="section-lede">Parents who've been there, your pediatrician, and your baby's records, together in one calm app.</p>
-        <ul class="village">
-          <li class="village__item">
-            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-people"/></svg>
-            <h3>Parents who've been there</h3>
-            <p>Ask the Dawn community of parents with babies the same age, and see what worked for them.</p>
-          </li>
-          <li class="village__item">
-            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg>
-            <h3>Find a pediatrician nearby</h3>
-            <p>Find one near you for a routine question or an urgent one, and add their reports to your baby's record.</p>
-          </li>
-          <li class="village__item">
-            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-report"/></svg>
-            <h3>Doctor-ready in one tap</h3>
-            <p>Share a clear summary of the night, the week or the symptom, instead of trying to describe it from memory.</p>
-          </li>
-          <li class="village__item">
-            <svg class="village__icon" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg>
-            <h3>Vaccines and milestones</h3>
-            <p>A vaccine tracker with reminders, plus a journal of firsts, growth and milestones as they grow.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 8. How it works -->
-    <section class="section cream-2" id="how" aria-labelledby="how-title">
-      <div class="wrap">
-        <p class="eyebrow">How it works</p>
-        <h2 id="how-title" class="display display--md">Three steps to a calmer night.</h2>
-
-        <ol class="steps">
-          <li class="step">
-            <span class="step__num" aria-hidden="true">1</span>
-            <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-band"/></svg>
-            <h3>Slip on the band</h3>
-            <p>Click the pod into the band and wrap it around your baby's chest, over a bodysuit or on skin. It takes about ten seconds.</p>
-          </li>
-          <li class="step">
-            <span class="step__num" aria-hidden="true">2</span>
-            <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
-            <h3>Pair with the app</h3>
-            <p>Plug in the dock, open the Dawn app and follow three screens. The pod talks to the dock, and the dock talks to your phone.</p>
-          </li>
-          <li class="step">
-            <span class="step__num" aria-hidden="true">3</span>
-            <svg class="step__icon" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
-            <h3>Rest, and glance when you like</h3>
-            <p>Check live vitals any time, get an alert when something is off from your baby's normal, and wake up to one morning score.</p>
-          </li>
-        </ol>
-
-        <div class="specs">
-          <h3 class="specs__title">Specs</h3>
-          <p class="specs__note">Target specs. Dawn is in development, so details may change.</p>
-          <div class="table-scroll">
-            <table class="specs-table">
-              <tbody>
-                <tr>
-                  <th scope="row">Sizes</th>
-                  <td>
-                    <ul class="sizes">
-                      <li><b>Small</b> 0-3 mo <span>chest 32-40 cm</span></li>
-                      <li><b>Medium</b> 3-9 mo <span>chest 38-47 cm</span></li>
-                      <li><b>Large</b> 9-18 mo <span>chest 44-54 cm</span></li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr><th scope="row">Band</th><td>Soft organic cotton knit with a little stretch, wide hook-and-loop tab, soft flat seams</td></tr>
-                <tr><th scope="row">Sensor pod</th><td>18 g, rounded silicone shell, one green, yellow or red status light</td></tr>
-                <tr><th scope="row">Sensors</th><td>Motion sensor (breathing, position, movement), optical sensor (heart rate, SpO<sub>2</sub>), skin temperature sensor, microphone for on-device cry and cough detection</td></tr>
-                <tr><th scope="row">Battery life</th><td>Up to 5 days per charge</td></tr>
-                <tr><th scope="row">Charging</th><td>Magnetic charging dock, full charge in about 90 minutes, USB-C power</td></tr>
-                <tr><th scope="row">Dock</th><td>Room temperature and humidity sensor, connects to 2.4 GHz home Wi-Fi</td></tr>
-                <tr><th scope="row">Connection</th><td>Bluetooth Low Energy from pod to dock</td></tr>
-                <tr><th scope="row">App</th><td>iPhone and Android</td></tr>
-                <tr><th scope="row">Care</th><td>Band machine washable, pod splash resistant</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 9. Pricing -->
-    <section class="section paper" id="pricing" aria-labelledby="pricing-title">
-      <div class="wrap">
-        <p class="eyebrow eyebrow--time"><span class="eyebrow__time">6:30 am</span> Pricing</p>
-        <h2 id="pricing-title" class="display display--md">Choose how you'd like Dawn.</h2>
-        <p class="section-lede">Both include the band, the sensor pod, the charging dock, live vitals and the green, yellow, red light.</p>
-
-        <div class="plans">
-          <article class="plan plan--featured" aria-labelledby="plan-membership-title">
-            <p class="plan__flag">Band included</p>
-            <h3 id="plan-membership-title" class="plan__name">Dawn Membership</h3>
-            <p class="plan__price"><span data-price="membership"></span><span class="plan__per">/year</span></p>
-            <p class="plan__term">Billed yearly. Cancel anytime.</p>
-            <ul class="plan__list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Dawn band, pod and charging dock</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Live vitals and the one-light status</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Morning score, trends and your baby's own normal</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Mira, your 3 a.m. guide</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Doctor-ready reports in one tap</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Parent community and vaccine tracker</li>
-            </ul>
-            <button class="btn btn--sun btn--block" type="button" data-buy data-plan="membership" data-button="pricing">Buy Dawn Membership</button>
-          </article>
-
-          <article class="plan" aria-labelledby="plan-onetime-title">
-            <h3 id="plan-onetime-title" class="plan__name">Dawn Band</h3>
-            <p class="plan__price"><span data-price="onetime"></span></p>
-            <p class="plan__term">One-time price. No membership.</p>
-            <ul class="plan__list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Dawn band, pod and charging dock</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Live vitals and the one-light status</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Alerts to your phone</li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>7 days of history</li>
-            </ul>
-            <button class="btn btn--primary btn--block" type="button" data-buy data-plan="onetime" data-button="pricing">Buy Dawn Band</button>
-          </article>
-
-          <aside class="plan plan--box" aria-labelledby="box-title">
-            <h3 id="box-title" class="plan__name">In the box</h3>
-            <ul class="box-list">
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-band"/></svg><div><b>Dawn band</b><span>Organic cotton, in Small, Medium or Large</span></div></li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-drop"/></svg><div><b>Sensor pod</b><span>18 g, with one status light</span></div></li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-room"/></svg><div><b>Charging dock</b><span>Also measures nursery temperature and humidity</span></div></li>
-              <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg><div><b>The Dawn app</b><span>For iPhone and Android</span></div></li>
-            </ul>
-          </aside>
-        </div>
-        <p class="plans__foot">Prices in <span data-currency>USD</span>. You can switch from the one-time plan to a membership later.</p>
-      </div>
-    </section>
-
-    <!-- 10. FAQ -->
+    <!-- 5. Two quick answers -->
     <section class="section cream" id="faq" aria-labelledby="faq-title">
       <div class="wrap wrap--narrow">
-        <p class="eyebrow">Questions</p>
-        <h2 id="faq-title" class="display display--md">Good morning. Ask away.</h2>
-
+        <h2 id="faq-title" class="lights__title">Quick answers</h2>
         <div class="faq">
-          <details>
-            <summary>Is Dawn a medical device?</summary>
-            <div class="faq__body">
-              <p>No. Dawn is a concept product in development and is not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and it does not replace safe sleep practices or advice from your pediatrician.</p>
-              <p>Always follow safe sleep guidance: baby on their back, on a firm, flat surface, with nothing else in the crib.</p>
-            </div>
-          </details>
           <details>
             <summary>When does it ship?</summary>
             <div class="faq__body">
-              <p>We are finishing development now and orders are not open yet. Reserve a spot and you will be the first to hear when pre-orders open, including the final price and shipping date. Reserving is free and does not commit you to anything.</p>
+              <p>We're still building it. Pre-order and you'll be first to hear when it's ready. Nothing is charged today.</p>
             </div>
           </details>
           <details>
-            <summary>Membership or one-time: what's the difference?</summary>
+            <summary>Is it a medical device?</summary>
             <div class="faq__body">
-              <p>Both come with the band, pod and dock, live vitals, alerts and the green, yellow, red light. The membership adds the morning score and trends, Mira, doctor-ready reports, unlimited history, the parent community and the vaccine tracker, billed once a year. The one-time plan is a single payment with 7 days of history.</p>
+              <p>No. Dawn doesn't diagnose anything and doesn't replace your pediatrician or safe sleep: baby on their back, on a firm, flat surface, nothing else in the crib.</p>
             </div>
           </details>
           <details>
-            <summary>What is Mira?</summary>
+            <summary>Is it safe for my baby?</summary>
             <div class="faq__body">
-              <p>Mira is Dawn's AI guide. It looks at your baby's readings against their own normal and suggests calm next steps, like what to try when a baby won't settle, and it tells you clearly when it's time to call your pediatrician. Mira gives general guidance, not medical advice. In an emergency, call your local emergency number.</p>
+              <p>Dawn is designed to be gentle. The band is soft organic cotton with no wires in the fabric, and the 18 g pod has a smooth, rounded silicone shell, so nothing hard presses on your baby's skin. It uses low-energy Bluetooth to talk to the dock.</p>
             </div>
           </details>
           <details>
-            <summary>Is my data private?</summary>
+            <summary>Has it been tested?</summary>
             <div class="faq__body">
-              <p>Your data is yours. Cry and cough detection runs on the pod itself, and audio is never uploaded. Readings are encrypted on their way to your phone and in storage, you choose what to share with your pediatrician, and your family's data will never be sold.</p>
-              <p>On this website, we only collect what is described in our <a href="privacy.html">privacy notice</a>.</p>
+              <p>Not yet. Dawn is still a prototype. Before it ships, it has to pass independent safety testing for baby products, and we'll share the results here. Until then, nothing is sold or charged.</p>
             </div>
           </details>
-          <details>
-            <summary>Which size do I need?</summary>
-            <div class="faq__body">
-              <p>There are three sizes: Small for 0-3 months (chest 32-40 cm), Medium for 3-9 months (38-47 cm) and Large for 9-18 months (44-54 cm). The band stretches, so each size covers a range. If you are between sizes, measure around the chest just under the armpits and pick the size where that number falls in the middle.</p>
-            </div>
-          </details>
-          <details>
-            <summary>What is it made of?</summary>
-            <div class="faq__body">
-              <p>The band is a soft organic cotton knit with a little stretch, with flat seams and no wires in the fabric. The 18-gram pod has a smooth, rounded silicone shell, so nothing hard or heavy presses on your baby's skin.</p>
-            </div>
-          </details>
-          <details>
-            <summary>How do I wash it?</summary>
-            <div class="faq__body">
-              <p>Pop the pod out, then machine wash the band cold on a gentle cycle and lay it flat to dry. Wipe the pod with a damp cloth. Many parents keep a second band so one is always fresh.</p>
-            </div>
-          </details>
-          <details>
-            <summary>What's next for Dawn?</summary>
-            <div class="faq__body">
-              <p>The band comes first. After that we're working on a movement monitor, a smart cradle and a smart diaper that all share one app, growing with your baby from birth to toddler.</p>
-            </div>
-          </details>
-        </div>
-
-        <div class="cta-end">
-          <p>Peace with Dawn.</p>
-          <a class="btn btn--primary btn--lg" href="#pricing">See plans</a>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Floating pre-order button: appears once the hero button scrolls out of view -->
+  <div class="sticky-cta" data-sticky-cta aria-hidden="true">
+    <div class="sticky-cta__bar">
+      <p class="sticky-cta__text"><b>Dawn</b><span>Nothing charged today</span></p>
+      <button class="btn btn--sun" type="button" data-buy data-plan="membership" data-button="sticky" tabindex="-1">Pre-order now<svg class="icon btn__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="wrap footer__inner">
@@ -719,9 +286,9 @@
 
       <!-- View: form -->
       <div class="modal__view" data-view="form">
-        <h2 id="reserve-title" class="modal__title">Reserve your Dawn</h2>
-        <p class="modal__text">Dawn ships soon. Reserve yours at <strong data-modal-price></strong> and we'll email you first when orders open. No payment now, no card needed.</p>
-        <p class="modal__plan">Plan: <span data-modal-plan>Dawn Membership</span></p>
+        <h2 id="reserve-title" class="modal__title">Pre-order Dawn</h2>
+        <p class="modal__price"><span data-modal-price></span></p>
+        <p class="modal__text">Band, sensor and app included. Nothing is charged today. Leave your email to hold your spot at this price.</p>
 
         <form class="reserve-form" novalidate>
           <div class="field">
@@ -730,80 +297,9 @@
             <p class="field__error" id="r-email-error" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
           </div>
 
-          <fieldset class="optional">
-            <legend>A few optional questions</legend>
-
-            <fieldset class="field">
-              <legend>Your baby's stage</legend>
-              <div class="choice-row">
-                <label class="choice"><input type="radio" name="baby_stage" value="Expecting"><span>Expecting</span></label>
-                <label class="choice"><input type="radio" name="baby_stage" value="0-3 months"><span>0-3 months</span></label>
-                <label class="choice"><input type="radio" name="baby_stage" value="3-12 months"><span>3-12 months</span></label>
-                <label class="choice"><input type="radio" name="baby_stage" value="1 year+"><span>1 year+</span></label>
-                <label class="choice"><input type="radio" name="baby_stage" value="Buying as a gift"><span>Buying as a gift</span></label>
-              </div>
-            </fieldset>
-
-            <div class="field">
-              <label for="r-feature">Most wanted feature</label>
-              <select id="r-feature" name="wanted_feature">
-                <option value="">Choose one (optional)</option>
-                <option>Breathing rate</option>
-                <option>Heart rate</option>
-                <option>Blood oxygen</option>
-                <option>Skin temperature</option>
-                <option>Sleep position and rollover alerts</option>
-                <option>Active vs quiet sleep</option>
-                <option>Movement and wake windows</option>
-                <option>Cry and cough detection</option>
-                <option>Room temperature and humidity</option>
-                <option>Feeding and diaper log</option>
-                <option>Mira, the 3 a.m. guide</option>
-                <option>Doctor-ready reports</option>
-                <option>Parent community</option>
-                <option>Vaccine tracker</option>
-              </select>
-            </div>
-
-            <fieldset class="field">
-              <legend>Would you buy at this price?</legend>
-              <div class="choice-row">
-                <label class="choice"><input type="radio" name="would_buy" value="Yes"><span>Yes</span></label>
-                <label class="choice"><input type="radio" name="would_buy" value="Maybe at a lower price"><span>Maybe at a lower price</span></label>
-                <label class="choice"><input type="radio" name="would_buy" value="No, just curious"><span>No, just curious</span></label>
-              </div>
-            </fieldset>
-
-            <fieldset class="field">
-              <legend>How would you rather pay?</legend>
-              <div class="choice-row">
-                <label class="choice"><input type="radio" name="pay_preference" value="Yearly membership"><span>Yearly membership</span></label>
-                <label class="choice"><input type="radio" name="pay_preference" value="One-time purchase"><span>One-time purchase</span></label>
-                <label class="choice"><input type="radio" name="pay_preference" value="Not sure yet"><span>Not sure yet</span></label>
-              </div>
-            </fieldset>
-
-            <div class="field">
-              <label for="r-max">The most you'd pay per year for Dawn</label>
-              <select id="r-max" name="max_per_year">
-                <option value="">Choose one (optional)</option>
-                <option>Less than $100</option>
-                <option>$100 to $149</option>
-                <option>$150 to $199</option>
-                <option>$200 to $249</option>
-                <option>$250 or more</option>
-              </select>
-            </div>
-          </fieldset>
-
-          <label class="check">
-            <input type="checkbox" name="updates_opt_in" id="r-updates">
-            <span>Email me product updates.</span>
-          </label>
-
           <div class="modal__actions">
-            <button class="btn btn--primary btn--block btn--lg" type="submit">Reserve my spot</button>
-            <p class="modal__fine">We'll only use your email to tell you about Dawn. Unsubscribe anytime. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></p>
+            <button class="btn btn--primary btn--block btn--lg" type="submit">Hold my spot</button>
+            <p class="modal__fine">We'll only email you about Dawn. Unsubscribe anytime. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></p>
           </div>
         </form>
       </div>

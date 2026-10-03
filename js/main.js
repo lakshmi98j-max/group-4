@@ -43,8 +43,13 @@
 
   function setupNav() {
     var header = $(".nav");
+    if (!header) return;
+    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
     var toggle = $(".nav__toggle");
-    if (!header || !toggle) return;
+    if (!toggle) return;
 
     function setOpen(open) {
       header.classList.toggle("is-open", open);
@@ -66,10 +71,31 @@
     window.addEventListener("resize", function () {
       if (window.innerWidth >= 960) setOpen(false);
     });
+  }
 
-    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+  /* ---------- Floating pre-order button ---------- */
+
+  // Shows once the hero button has scrolled out of view, so a Pre-order button is
+  // always one tap away.
+  function setupStickyCta() {
+    var bar = $("[data-sticky-cta]");
+    var hero = $("[data-hero-cta]");
+    if (!bar || !hero) return;
+    var btn = $("button", bar);
+    function set(show) {
+      bar.classList.toggle("is-visible", show);
+      bar.setAttribute("aria-hidden", show ? "false" : "true");
+      btn.tabIndex = show ? 0 : -1;
+    }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        // Visible only after the hero button has left through the top of the screen.
+        set(!e.isIntersecting && e.boundingClientRect.top < 0);
+      }).observe(hero);
+    } else {
+      set(true);
+    }
   }
 
   /* ---------- Temperature unit ---------- */
@@ -536,58 +562,18 @@
       }
       setError(false);
 
-      function radio(name) {
-        var checked = form.querySelector('input[name="' + name + '"]:checked');
-        return checked ? checked.value : "";
-      }
-
+      // Email only: the price they saw is recorded with every event by track.js.
       state.submitted = true;
       submitBtn.disabled = true;
       T.track("reserve", {
         email: email,
         plan: state.plan,
-        button: state.button,
-        baby_stage: radio("baby_stage"),
-        wanted_feature: form.elements.wanted_feature.value || "",
-        would_buy: radio("would_buy"),
-        pay_preference: radio("pay_preference"),
-        max_per_year: form.elements.max_per_year.value || "",
-        updates_opt_in: form.elements.updates_opt_in.checked ? "yes" : "no"
+        button: state.button
       });
       T.setEmail(email);
       showView("done");
       focusView();
     });
-  }
-
-  /* ---------- Section tracking ---------- */
-
-  function setupPricingWatch() {
-    var pricing = document.getElementById("pricing");
-    if (!pricing) return;
-    function fire() {
-      T.oncePerSession("scroll_to_pricing", function () { T.track("scroll_to_pricing"); });
-    }
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            fire();
-            io.disconnect();
-          }
-        });
-      }, { threshold: 0.25 });
-      io.observe(pricing);
-    } else {
-      var check = function () {
-        if (pricing.getBoundingClientRect().top < window.innerHeight * 0.75) {
-          fire();
-          window.removeEventListener("scroll", check);
-        }
-      };
-      window.addEventListener("scroll", check, { passive: true });
-      check();
-    }
   }
 
   /* ---------- Start ---------- */
@@ -601,7 +587,7 @@
     startLiveValues();
     setupNight();
     setupReserve();
-    setupPricingWatch();
+    setupStickyCta();
     T.track("page_view");
   }
 

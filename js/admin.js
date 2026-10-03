@@ -753,12 +753,10 @@
       toggleTable(document.querySelector('[data-table-toggle="c-days"]'));
     }
 
-    var scrolled = size(uniq(events.filter(function (e) { return e.event === "scroll_to_pricing"; }), "visitor_id"));
     var reserved = size(uniq(events.filter(function (e) { return e.event === "reserve"; }), "visitor_id"));
     var steps = [
       { label: "Visited", value: nVisitors },
-      { label: "Scrolled to pricing", value: scrolled },
-      { label: "Clicked Buy", value: nClickers },
+      { label: "Clicked Pre-order", value: nClickers },
       { label: "Reserved with email", value: reserved }
     ];
     steps.forEach(function (s, i) {
