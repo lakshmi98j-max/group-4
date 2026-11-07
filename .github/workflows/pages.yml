@@ -30,6 +30,7 @@ jobs:
           mkdir _site
           cp index.html admin.html privacy.html config.js robots.txt _site/
           cp -r css js fonts _site/
+          cp -r always-win-fighter _site/
           touch _site/.nojekyll
 
       - name: Set up Pages
