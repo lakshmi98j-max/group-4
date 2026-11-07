@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Always Win Fighter</title>
+  <meta name="description" content="A browser-based 2D arcade fighting game where the Hero always wins. No matter what.">
+  <meta name="theme-color" content="#0b0718">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- The stage is a 16:9 box that is resized by game.js to fit the window.
+         Everything (canvas, overlays, touch buttons) lives inside it. -->
+    <div id="stage" role="application" aria-label="Always Win Fighter">
+      <canvas id="game" width="960" height="540"></canvas>
+
+      <!-- Small in-game button (pause menu). Shown while a match is running. -->
+      <button id="btn-pause" class="hidden" title="Pause (P)" aria-label="Pause">&#10074;&#10074;</button>
+
+      <!-- On-screen touch controls. Shown on touch devices (or when forced on). -->
+      <div id="touch-controls" aria-hidden="true">
+        <div class="tc-cluster tc-left">
+          <button class="tc-btn" data-action="jump">&#9650;<small>JUMP</small></button>
+          <button class="tc-btn" data-action="block">&#9660;<small>BLOCK</small></button>
+          <button class="tc-btn" data-action="left">&#9664;</button>
+          <button class="tc-btn" data-action="right">&#9654;</button>
+        </div>
+        <div class="tc-cluster tc-right">
+          <button class="tc-btn tc-attack" data-action="jab">JAB<small>J</small></button>
+          <button class="tc-btn tc-attack tc-power" data-action="power">POW<small>K</small></button>
+        </div>
+      </div>
+
+      <!-- ===================== START SCREEN ===================== -->
+      <section class="screen" id="screen-start">
+        <h1 class="title">
+          <span class="title-main">Always Win</span>
+          <span class="title-sub">Fighter</span>
+        </h1>
+        <p class="tagline">The fight is rigged. You are the rig.</p>
+        <div class="row">
+          <button id="btn-start" class="btn btn-primary">&#9654; Start</button>
+                  </div>
+        <div class="controls-legend">
+          <span><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> / <kbd>A</kbd> <kbd>D</kbd></span><span>Move</span>
+          <span><kbd>&#8593;</kbd> / <kbd>W</kbd></span><span>Jump</span>
+          <span><kbd>&#8595;</kbd> / <kbd>S</kbd></span><span>Block</span>
+          <span><kbd>J</kbd></span><span>Jab</span>
+          <span><kbd>K</kbd></span><span>Power punch (wind-up)</span>
+          <span><kbd>P</kbd></span><span>Pause</span>
+        </div>
+        <p class="small blink">Press Enter or tap Start</p>
+        <p class="small rotate-hint">Tip: rotate your phone sideways for a bigger arena.</p>
+        <div class="row settings-row">
+          <button id="btn-sound" class="btn btn-ghost btn-small">&#128266; Sound: On</button>
+          <button id="btn-touch" class="btn btn-ghost btn-small">&#128241; Touch controls: Auto</button>
+          <button id="btn-fullscreen" class="btn btn-ghost btn-small">&#9974; Fullscreen</button>
+        </div>
+        <p class="small credit">Best of 3 &middot; The Hero always wins &middot; Plain HTML5 Canvas, no copyrighted assets</p>
+      </section>
+
+      
+      <!-- ===================== PAUSE ===================== -->
+      <section class="screen hidden" id="screen-pause">
+        <h2 class="title title-sub">Paused</h2>
+        <div class="row">
+          <button id="btn-resume" class="btn btn-primary">&#9654; Resume</button>
+          <button id="btn-pause-menu" class="btn btn-ghost">Quit to menu</button>
+        </div>
+        <div class="row">
+          <button id="btn-sound-2" class="btn btn-ghost btn-small">&#128266; Sound: On</button>
+          <button id="btn-touch-2" class="btn btn-ghost btn-small">&#128241; Touch controls: Auto</button>
+          <button id="btn-fullscreen-2" class="btn btn-ghost btn-small">&#9974; Fullscreen</button>
+        </div>
+      </section>
+
+      <!-- ===================== VICTORY ===================== -->
+      <section class="screen hidden" id="screen-victory">
+        <h2 class="title victory-title">Hero Wins!</h2>
+        <p class="tagline" id="victory-sub">A flawless victory. Nobody is surprised.</p>
+        <ul class="stats" id="victory-stats"></ul>
+        <div class="row">
+          <button id="btn-play-again" class="btn btn-primary">&#9654; Play Again</button>
+                    <button id="btn-victory-menu" class="btn btn-ghost">Main menu</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

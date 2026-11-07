@@ -1,0 +1,309 @@
+/* ==========================================================================
+   ALWAYS WIN FIGHTER - style.css
+   Layout for the 16:9 stage, the DOM overlay screens (start / customize /
+   pause / victory) and the on-screen touch controls.
+
+   Sizing trick: game.js sets `font-size` on #stage to 1% of the stage width,
+   so every `em` value inside the stage scales with the game window.
+   ========================================================================== */
+
+:root {
+  --bg: #0b0718;
+  --panel: rgba(12, 6, 30, 0.86);
+  --gold: #ffd166;
+  --red: #e63946;
+  --ink: #1d1530;
+  --text: #f7f3ff;
+  --muted: #b8aee0;
+  --arcade-font: Impact, "Arial Black", Haettenschweiler, "Franklin Gothic Bold", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #1c0f3a 0%, #0b0718 70%);
+}
+
+/* The stage keeps a 16:9 ratio; game.js sets its pixel width/height. */
+#stage {
+  position: relative;
+  width: 960px;
+  height: 540px;
+  --unit: 9.6px;                 /* overwritten by game.js: 1% of the stage width */
+  font-size: var(--unit);        /* so 1em = 1% of the stage width inside the stage */
+  overflow: hidden;
+  background: #000;
+  border-radius: 0.6em;
+  box-shadow: 0 0 0 0.4em #241a44, 0 2em 6em rgba(0, 0, 0, 0.6);
+}
+
+/* Subtle CRT scanlines over everything for the arcade cabinet feel. */
+#stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.04) 0 1px,
+    rgba(0, 0, 0, 0.10) 1px 3px);
+  mix-blend-mode: overlay;
+}
+
+canvas#game {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden { display: none !important; }
+
+/* ---------------------------------------------------------------------------
+   Overlay screens
+   --------------------------------------------------------------------------- */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;    /* "safe" centring: see the margin rules below */
+  gap: 1.2em;
+  padding: 2em 3em;
+  text-align: center;
+  background: var(--panel);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+/* Centre the content vertically, but let it scroll instead of clipping the top when it is too tall. */
+.screen > :first-child { margin-top: auto; }
+.screen > :last-child  { margin-bottom: auto; }
+
+.title {
+  font-family: var(--arcade-font);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-main {
+  font-size: 8em;
+  white-space: nowrap;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  -webkit-text-stroke: 0.05em var(--ink);
+  text-shadow: 0.1em 0.1em 0 #b3002d, 0.18em 0.18em 0 var(--ink);
+}
+
+.title-sub {
+  font-size: 4.6em;
+  white-space: nowrap;
+  color: #fff;
+  -webkit-text-stroke: 0.04em var(--ink);
+  text-shadow: 0.1em 0.1em 0 var(--ink);
+}
+
+.victory-title {
+  font-size: 8.5em;
+  white-space: nowrap;
+  color: var(--gold);
+  -webkit-text-stroke: 0.05em var(--ink);
+  text-shadow: 0.1em 0.1em 0 #b3002d, 0.18em 0.18em 0 var(--ink);
+  animation: pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+@keyframes pop {
+  from { transform: scale(0.2) rotate(-8deg); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+.tagline { font-size: 2em; color: #e2dcff; margin: 0; }
+.small   { font-size: 1.5em; color: var(--muted); margin: 0; max-width: 60em; }
+.credit  { font-size: 1.2em; }
+
+.row {
+  display: flex;
+  gap: 1.2em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chunky arcade buttons */
+.btn {
+  font-family: var(--arcade-font);
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 2.4em;
+  padding: 0.45em 1.2em;
+  border: 0.1em solid var(--ink);
+  border-radius: 0.35em;
+  background: linear-gradient(#ffe08a, #ffb703);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 0.22em 0 var(--ink);
+  transition: transform 0.08s, box-shadow 0.08s, filter 0.08s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.btn:hover  { filter: brightness(1.08); }
+.btn:focus-visible { outline: 0.15em solid #fff; outline-offset: 0.1em; }
+.btn:active { transform: translateY(0.18em); box-shadow: 0 0.04em 0 var(--ink); }
+.btn-primary { background: linear-gradient(#ff7b7b, var(--red)); color: #fff; font-size: 2.9em; }
+.btn-ghost   { background: linear-gradient(#3a2a62, #241a44); color: #fff; }
+.btn-small   { font-size: 1.7em; padding: 0.4em 0.9em; }
+
+.controls-legend {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  gap: 0.35em 1em;
+  font-size: 1.45em;
+  text-align: left;
+  align-items: center;
+}
+.controls-legend span:nth-child(odd) { text-align: right; }
+.controls-legend span:nth-child(even) { margin-right: 1.2em; color: var(--muted); }
+
+kbd {
+  font-family: inherit;
+  font-weight: 700;
+  background: #2a1b4a;
+  border: 0.08em solid #5b4a8a;
+  border-bottom-width: 0.22em;
+  border-radius: 0.3em;
+  padding: 0.05em 0.5em;
+  color: var(--gold);
+}
+
+.blink { animation: blink 1s steps(2) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+
+.rotate-hint { display: none; }
+
+.stats {
+  list-style: none;
+  margin: 0;
+  padding: 0.8em 1.6em;
+  font-size: 1.9em;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.3em 2.5em;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 0.5em;
+}
+.stats li { display: contents; }
+.stats li span:first-child { color: var(--muted); }
+.stats li span:last-child  { color: var(--gold); font-weight: 700; text-align: right; }
+
+/* ---------------------------------------------------------------------------
+   In-game pause button (top centre, under the round timer)
+   --------------------------------------------------------------------------- */
+#btn-pause {
+  position: absolute;
+  z-index: 4;
+  top: 7.2em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4em;
+  height: 2.6em;
+  border: 0.12em solid rgba(255, 255, 255, 0.55);
+  border-radius: 0.5em;
+  background: rgba(20, 10, 40, 0.55);
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   Touch controls (shown when <body class="touch">)
+   --------------------------------------------------------------------------- */
+#touch-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: none;
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+body.touch #touch-controls { display: block; }
+
+.tc-cluster {
+  position: absolute;
+  bottom: 2.2em;
+  display: grid;
+  gap: 0.9em;
+  pointer-events: auto;
+}
+.tc-left  { left: 2.2em;  grid-template-columns: repeat(2, auto); }
+.tc-right { right: 2.2em; grid-template-columns: repeat(2, auto); align-items: end; }
+
+.tc-btn {
+  pointer-events: auto;
+  width: clamp(58px, calc(var(--unit) * 7), 86px);
+  height: clamp(58px, calc(var(--unit) * 7), 86px);
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  background: rgba(20, 10, 40, 0.5);
+  color: #fff;
+  font: 900 clamp(16px, calc(var(--unit) * 2.4), 28px)/1 var(--arcade-font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1em;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  backdrop-filter: blur(2px);
+  padding: 0;
+}
+.tc-btn small { font-size: 0.42em; letter-spacing: 0.05em; opacity: 0.85; }
+.tc-btn.active { background: rgba(255, 209, 102, 0.9); color: var(--ink); transform: scale(0.94); }
+.tc-attack { width: clamp(66px, calc(var(--unit) * 8.5), 100px); height: clamp(66px, calc(var(--unit) * 8.5), 100px); background: rgba(230, 57, 70, 0.6); }
+.tc-power  { background: rgba(142, 45, 226, 0.65); }
+
+/* ---------------------------------------------------------------------------
+   Phones in portrait: stage sits at the top, touch buttons use the free space
+   below it instead of covering the (small) arena.
+   --------------------------------------------------------------------------- */
+@media (orientation: portrait) {
+  #app { align-items: flex-start; padding-top: 2vh; }
+  #touch-controls { position: fixed; inset: auto 0 0 0; height: 46vh; }
+  .tc-cluster { bottom: 4vh; gap: 3vw; }
+  .tc-left { left: 3vw; }
+  .tc-right { right: 3vw; }
+  .tc-btn { width: 18vw; height: 18vw; font-size: 6vw; }
+  .tc-attack { width: 22vw; height: 22vw; }
+  .screen { gap: 1em; padding: 1.5em; }
+  .controls-legend { display: none; }
+}
+@media (orientation: portrait) and (max-width: 700px) {
+  .rotate-hint { display: block; }
+}
