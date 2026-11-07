@@ -42,7 +42,10 @@
         <p class="tagline">The fight is rigged. You are the rig.</p>
         <div class="row">
           <button id="btn-start" class="btn btn-primary">&#9654; Start</button>
-                  </div>
+          <!-- CUSTOM-FACES:START -->
+          <button id="btn-customize" class="btn">&#9998; Customize Fighters</button>
+          <!-- CUSTOM-FACES:END -->
+        </div>
         <div class="controls-legend">
           <span><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> / <kbd>A</kbd> <kbd>D</kbd></span><span>Move</span>
           <span><kbd>&#8593;</kbd> / <kbd>W</kbd></span><span>Jump</span>
@@ -61,7 +64,41 @@
         <p class="small credit">Best of 3 &middot; The Hero always wins &middot; Plain HTML5 Canvas, no copyrighted assets</p>
       </section>
 
-      
+      <!-- ===================== CUSTOMIZE FIGHTERS (feature: custom faces) ===================== -->
+      <!-- CUSTOM-FACES:START -->
+      <section class="screen hidden" id="screen-customize">
+        <h2 class="title title-sub">Customize Fighters</h2>
+        <p class="small">Upload a face photo for each fighter. It is cropped to a circle and mapped onto the
+          fighter's head. <strong>Photos never leave your device</strong>: they are kept in this browser only.</p>
+        <div class="face-cards">
+          <div class="face-card" data-who="hero">
+            <h3>The Hero</h3>
+            <canvas class="face-preview" width="240" height="240" title="Drag to reposition"></canvas>
+            <p class="small">Drag the photo to reposition it</p>
+            <label class="range"><span>Zoom</span><input type="range" class="face-zoom" min="1" max="3" step="0.01" value="1"></label>
+            <div class="row">
+              <label class="btn btn-small">Upload photo<input type="file" class="face-file" accept="image/*" hidden></label>
+              <button class="btn btn-small btn-ghost face-reset">Use default</button>
+            </div>
+          </div>
+          <div class="face-card" data-who="challenger">
+            <h3>The Challenger</h3>
+            <canvas class="face-preview" width="240" height="240" title="Drag to reposition"></canvas>
+            <p class="small">Drag the photo to reposition it</p>
+            <label class="range"><span>Zoom</span><input type="range" class="face-zoom" min="1" max="3" step="0.01" value="1"></label>
+            <div class="row">
+              <label class="btn btn-small">Upload photo<input type="file" class="face-file" accept="image/*" hidden></label>
+              <button class="btn btn-small btn-ghost face-reset">Use default</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button id="btn-customize-back" class="btn btn-ghost">&#9664; Back</button>
+          <button id="btn-customize-fight" class="btn btn-primary">Fight! &#9654;</button>
+        </div>
+      </section>
+      <!-- CUSTOM-FACES:END -->
+
       <!-- ===================== PAUSE ===================== -->
       <section class="screen hidden" id="screen-pause">
         <h2 class="title title-sub">Paused</h2>
@@ -83,12 +120,18 @@
         <ul class="stats" id="victory-stats"></ul>
         <div class="row">
           <button id="btn-play-again" class="btn btn-primary">&#9654; Play Again</button>
-                    <button id="btn-victory-menu" class="btn btn-ghost">Main menu</button>
+          <!-- CUSTOM-FACES:START -->
+          <button id="btn-victory-customize" class="btn">&#9998; Customize Fighters</button>
+          <!-- CUSTOM-FACES:END -->
+          <button id="btn-victory-menu" class="btn btn-ghost">Main menu</button>
         </div>
       </section>
     </div>
   </div>
 
-    <script src="game.js"></script>
+  <!-- CUSTOM-FACES:START -->
+  <script src="assets/faces/faces.js"></script>
+  <!-- CUSTOM-FACES:END -->
+  <script src="game.js"></script>
 </body>
 </html>

@@ -290,6 +290,50 @@ body.touch #touch-controls { display: block; }
 .tc-power  { background: rgba(142, 45, 226, 0.65); }
 
 /* ---------------------------------------------------------------------------
+   Custom faces screen (feature: custom faces)
+   --------------------------------------------------------------------------- */
+/* CUSTOM-FACES:START */
+.face-cards {
+  display: flex;
+  gap: 2.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.face-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 0.1em solid #3a2a62;
+  border-radius: 0.8em;
+  padding: 1.2em 1.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7em;
+}
+.face-card h3 {
+  margin: 0;
+  font-family: var(--arcade-font);
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 2.6em;
+  color: var(--gold);
+  -webkit-text-stroke: 0.03em var(--ink);
+}
+.face-preview {
+  width: 15em;
+  height: 15em;
+  border-radius: 50%;
+  border: 0.35em solid var(--ink);
+  box-shadow: 0 0 0 0.25em var(--gold);
+  background: #241a44;
+  cursor: grab;
+  touch-action: none;
+}
+.face-preview:active { cursor: grabbing; }
+.range { display: flex; align-items: center; gap: 0.8em; font-size: 1.6em; color: var(--muted); }
+.range input { width: 12em; accent-color: var(--gold); }
+/* CUSTOM-FACES:END */
+
+/* ---------------------------------------------------------------------------
    Phones in portrait: stage sits at the top, touch buttons use the free space
    below it instead of covering the (small) arena.
    --------------------------------------------------------------------------- */

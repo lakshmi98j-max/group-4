@@ -2045,6 +2045,180 @@ const Screens = (() => {
   return { init, onMode, onPause, showVictory, show, hideAll, fitTitles };
 })();
 
+// CUSTOM-FACES:START
+/* ==========================================================================
+   10b. CUSTOM FACES (feature) - upload a photo from the device, crop it to a
+        circle (zoom + drag to reposition) and map it onto the fighter's head.
+        Images are kept in this browser only (localStorage); nothing is sent
+        to any server. Optional drop-in defaults can be configured in
+        assets/faces/faces.js.
+   ========================================================================== */
+const FaceCustomizer = (() => {
+  const STORAGE_KEY = 'awf_faces_v1';
+  const SOURCE_MAX = 512;                      // uploaded photos are downscaled before being kept
+  const cards = {};
+  let game = null, returnTo = 'start';
+
+  function makeCard(el) {
+    const card = {
+      who: el.dataset.who, el, img: null, fromAsset: false, zoom: 1, ox: 0, oy: 0,
+      preview: el.querySelector('.face-preview'), zoomInput: el.querySelector('.face-zoom'),
+      fileInput: el.querySelector('.face-file'), resetBtn: el.querySelector('.face-reset'),
+    };
+    card.fileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) loadFile(card, file);
+      e.target.value = '';
+    });
+    card.resetBtn.addEventListener('click', () => {
+      card.img = null; card.fromAsset = false; card.zoom = 1; card.ox = card.oy = 0; card.zoomInput.value = 1;
+      apply(card); Sound.play('ui');
+    });
+    card.zoomInput.addEventListener('input', () => { card.zoom = parseFloat(card.zoomInput.value) || 1; apply(card); });
+    // drag the preview to reposition the photo inside the circle
+    let drag = null;
+    card.preview.addEventListener('pointerdown', (e) => {
+      if (!card.img) return;
+      drag = { x: e.clientX, y: e.clientY, ox: card.ox, oy: card.oy };
+      try { card.preview.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      e.preventDefault();
+    });
+    card.preview.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const k = FACE_SIZE / card.preview.getBoundingClientRect().width;     // pan is stored in face-canvas units
+      card.ox = drag.ox + (e.clientX - drag.x) * k;
+      card.oy = drag.oy + (e.clientY - drag.y) * k;
+      apply(card, true);
+    });
+    const endDrag = () => { if (drag) { drag = null; apply(card); } };
+    card.preview.addEventListener('pointerup', endDrag);
+    card.preview.addEventListener('pointercancel', endDrag);
+    return card;
+  }
+
+  /** Reads an image file picked on the device. It never leaves the browser. */
+  function loadFile(card, file) {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      card.img = downscale(img); card.fromAsset = false;
+      card.zoom = 1; card.ox = card.oy = 0; card.zoomInput.value = 1;
+      apply(card); Sound.play('ui');
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); alert('Sorry, that image could not be read. Try a JPG or PNG.'); };
+    img.src = url;
+  }
+
+  function downscale(img) {
+    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    const s = Math.min(1, SOURCE_MAX / Math.max(iw, ih));
+    const c = makeCanvas(Math.max(1, Math.round(iw * s)), Math.max(1, Math.round(ih * s)));
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return c;
+  }
+
+  /** Draws the source image cover-fitted into a circle, with zoom and pan. */
+  function renderFace(card, target) {
+    const ctx = target.getContext('2d'), S = target.width, img = card.img;
+    ctx.clearRect(0, 0, S, S);
+    ctx.save();
+    ctx.beginPath(); ctx.arc(S / 2, S / 2, S / 2, 0, TAU); ctx.clip();
+    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    const base = (S / Math.min(iw, ih)) * card.zoom;
+    const dw = iw * base, dh = ih * base, k = S / FACE_SIZE;
+    ctx.drawImage(img, S / 2 - dw / 2 + card.ox * k, S / 2 - dh / 2 + card.oy * k, dw, dh);
+    ctx.restore();
+  }
+
+  function apply(card, skipSave) {
+    if (card.img) {
+      const face = makeCanvas(FACE_SIZE, FACE_SIZE);
+      renderFace(card, face);
+      FaceStore.setCustom(card.who, face);
+    } else {
+      FaceStore.setCustom(card.who, null);
+    }
+    drawPreview(card);
+    if (!skipSave) save();
+  }
+
+  function drawPreview(card) {
+    const c = card.preview, ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.drawImage(FaceStore.get(card.who, 'normal'), 0, 0, c.width, c.height);
+  }
+
+  /** Remembers uploaded faces in this browser so they survive a reload. */
+  function save() {
+    const out = {};
+    for (const who in cards) {
+      const c = cards[who];
+      if (!c.img || c.fromAsset) continue;
+      try { out[who] = { src: c.img.toDataURL('image/jpeg', 0.85), zoom: c.zoom, ox: c.ox, oy: c.oy }; } catch (e) { /* skip */ }
+    }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(out)); } catch (e) { /* storage full or disabled: fine for this session */ }
+  }
+
+  function load() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { saved = null; }
+    if (!saved) return;
+    for (const who in saved) {
+      const c = cards[who], d = saved[who];
+      if (!c || !d || !d.src) continue;
+      const img = new Image();
+      img.onload = () => {
+        c.img = downscale(img); c.fromAsset = false;
+        c.zoom = d.zoom || 1; c.ox = d.ox || 0; c.oy = d.oy || 0; c.zoomInput.value = c.zoom;
+        apply(c, true);
+      };
+      img.src = d.src;
+    }
+  }
+
+  /** Optional drop-in defaults configured in assets/faces/faces.js (window.AWF_FACES). */
+  function loadAssetFaces() {
+    const cfg = window.AWF_FACES || {};
+    for (const who of ['hero', 'challenger']) {
+      if (!cfg[who]) continue;
+      const img = new Image();
+      img.onload = () => {
+        const c = cards[who];
+        if (c.img) return;                       // a face saved by the player wins
+        c.img = img; c.fromAsset = true;
+        apply(c, true);
+      };
+      img.onerror = () => console.warn(`Always Win Fighter: could not load the face image "${cfg[who]}" for ${who}.`);
+      img.src = cfg[who];
+    }
+  }
+
+  function open(from) {
+    returnTo = from;
+    for (const who in cards) drawPreview(cards[who]);
+    Screens.show('screen-customize');
+  }
+  function close() { Screens.show(returnTo === 'victory' ? 'screen-victory' : 'screen-start'); }
+
+  function init(g) {
+    game = g;
+    document.querySelectorAll('.face-card').forEach((el) => { cards[el.dataset.who] = makeCard(el); });
+    $('btn-customize').addEventListener('click', () => { Sound.unlock(); Sound.play('ui'); open('start'); });
+    $('btn-victory-customize').addEventListener('click', () => { Sound.play('ui'); open('victory'); });
+    $('btn-customize-back').addEventListener('click', () => { Sound.play('ui'); close(); });
+    $('btn-customize-fight').addEventListener('click', () => {
+      Sound.unlock(); Sound.play('ui');
+      if (game.mode === 'match_end') game.startMatch(); else game.startIntro();
+    });
+    load();
+    loadAssetFaces();
+    for (const who in cards) drawPreview(cards[who]);
+  }
+
+  return { init, open };
+})();
+// CUSTOM-FACES:END
 
 /* ==========================================================================
    11. BOOT
@@ -2075,7 +2249,10 @@ function boot() {
   window.addEventListener('resize', refit);
   window.addEventListener('orientationchange', refit);
   refit();
-    game.start();
+  // CUSTOM-FACES:START
+  FaceCustomizer.init(game);
+  // CUSTOM-FACES:END
+  game.start();
   window.AWF = game;                                      // handy for poking at the game from the console
 }
 

@@ -49,6 +49,35 @@ bigger arena.
 - Every round ends with **HERO WINS!** and a victory animation. A match is first to two rounds,
   which always means 2 - 0.
 
+<!-- CUSTOM-FACES:START -->
+## Custom faces
+
+Each fighter's head is a circle, so any face photo can be mapped onto it. The face follows the
+head through every animation: walking, jumping, punching, getting knocked down and celebrating.
+
+### Upload faces in the game
+
+1. Press **Customize Fighters** on the start screen (or on the victory screen).
+2. Press **Upload photo** under a fighter and pick an image from your device.
+3. Use the **Zoom** slider and **drag the preview** to frame the face inside the circle.
+4. Press **Fight!**
+
+Photos never leave your device. They are cropped in the browser and kept only in this browser's
+`localStorage` (downscaled to 512 px) so they are still there after a reload. **Use default**
+removes a photo again. Default cartoon faces, with different expressions for normal, angry, hurt,
+happy, dizzy and tired, are used whenever no photo is set.
+
+### Ship faces with your copy of the game
+
+To give everyone who visits your copy custom faces, put image files in `assets/faces/` and point
+to them in `assets/faces/faces.js`:
+
+```js
+window.AWF_FACES = { hero: 'assets/faces/hero.png', challenger: 'assets/faces/challenger.png' };
+```
+
+A photo uploaded by a player always takes priority over these files.
+<!-- CUSTOM-FACES:END -->
 
 ## Run it
 
@@ -89,6 +118,7 @@ Copy the `always-win-fighter/` folder into the site and it works at
 | `style.css` | Layout of the 16:9 stage, arcade-style buttons, touch controls, phone layouts |
 | `game.js` | The whole game: sound, input, faces, animation, fighters, AI, arena, HUD, game loop |
 | `assets/favicon.svg` | Browser tab icon |
+| `assets/faces/faces.js` | Optional drop-in face configuration (see "Custom faces") |
 | `assets/screenshot.png` | The screenshot above |
 
 ## How it works (for the curious)
